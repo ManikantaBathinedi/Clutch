@@ -279,6 +279,7 @@
     prevMoveCount = (data.moveHistory || []).length;
 
     if (data.phase === 'checkmate' || data.phase === 'stalemate' || data.phase === 'draw') {
+      renderBoard(data);
       renderGameOver(data);
       return;
     }
@@ -529,21 +530,15 @@
       result = '🤝 Draw';
     }
 
-    renderBoard(data);
+    // Show result overlay on the board (lobby game-over popup handles navigation)
     const overlay = document.createElement('div');
     overlay.className = 'chess-result-overlay chess-result-animate';
     overlay.innerHTML = `<div class="chess-result-box">
       <h2>${result}</h2>
       <p>${data.moveHistory ? data.moveHistory.length : 0} moves played</p>
-      ${isHost
-        ? '<button class="btn btn-sm btn-primary" id="chess-lobby-btn" style="margin-top:14px">🏠 Back to Lobby</button>'
-        : '<p style="color:var(--text-dim);font-size:0.82rem;margin-top:10px">Waiting for host\u2026</p>'}
     </div>`;
     const boardWrap = document.querySelector('.chess-board-wrap');
     if (boardWrap) boardWrap.appendChild(overlay);
-    document.getElementById('chess-lobby-btn')?.addEventListener('click', () => {
-      socket.emit('back-to-lobby');
-    });
   }
 
   // Global handlers

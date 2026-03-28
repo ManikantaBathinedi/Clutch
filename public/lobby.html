@@ -45,6 +45,7 @@
       <button class="sound-toggle" id="sound-toggle" title="Toggle sound"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg></button>
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
       <button class="report-issue-btn" id="report-issue-btn" title="Report an issue"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></button>
+      <button class="exit-room-btn" id="exit-room-btn" title="Exit to Home" onclick="if(confirm('Leave this room and go back to the home page?')) window.location.href='/';"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></button>
     </div>
   </header>
   <div class="container lobby-container">
@@ -313,31 +314,73 @@
 
   <!-- Report Issue Modal -->
   <div class="modal-overlay" id="report-issue-modal" style="display:none">
-    <div class="modal-card">
+    <div class="modal-card report-modal-pro">
       <button class="modal-close" id="report-modal-close">&times;</button>
-      <h2>🐛 Report an Issue</h2>
-      <div class="input-group">
-        <label for="report-category">Category</label>
-        <select id="report-category" class="input">
-          <option value="bug">Bug Report</option>
-          <option value="feature">Feature Request</option>
-          <option value="other">Other</option>
-        </select>
+      <div class="report-modal-header">
+        <div class="report-modal-icon">🐛</div>
+        <div>
+          <h2 class="report-modal-title">Report an Issue</h2>
+          <p class="report-modal-subtitle">Help us improve Clutch by reporting bugs or suggesting features</p>
+        </div>
+      </div>
+      <div class="report-form-grid">
+        <div class="input-group">
+          <label for="report-category">Category</label>
+          <select id="report-category" class="input">
+            <option value="bug">🐛 Bug Report</option>
+            <option value="feature">💡 Feature Request</option>
+            <option value="ui">🎨 UI/UX Issue</option>
+            <option value="performance">⚡ Performance</option>
+            <option value="other">📝 Other</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label for="report-severity">Priority</label>
+          <select id="report-severity" class="input">
+            <option value="low">Low — Minor issue</option>
+            <option value="medium" selected>Medium — Noticeable</option>
+            <option value="high">High — Blocks gameplay</option>
+          </select>
+        </div>
       </div>
       <div class="input-group">
-        <label for="report-title">Title</label>
+        <label for="report-title">Title <span class="required-star">*</span></label>
         <input type="text" id="report-title" class="input" placeholder="Brief summary of the issue" maxlength="200">
       </div>
       <div class="input-group">
         <label for="report-description">Description</label>
         <textarea id="report-description" class="input" rows="4" placeholder="Steps to reproduce, expected behavior, etc." maxlength="2000"></textarea>
       </div>
-      <button class="btn btn-primary" id="report-submit-btn">Submit Report</button>
+      <div class="input-group">
+        <label for="report-screenshot">Screenshot <span class="optional-tag">(optional)</span></label>
+        <div class="screenshot-upload" id="screenshot-upload-area">
+          <input type="file" id="report-screenshot" accept="image/*" style="display:none">
+          <div class="screenshot-placeholder" id="screenshot-placeholder">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <span>Click to upload or drag & drop</span>
+            <span class="screenshot-hint">PNG, JPG up to 5MB</span>
+          </div>
+          <div class="screenshot-preview" id="screenshot-preview" style="display:none">
+            <img id="screenshot-img" alt="Screenshot preview">
+            <button class="screenshot-remove" id="screenshot-remove" title="Remove screenshot">&times;</button>
+          </div>
+        </div>
+      </div>
+      <div class="report-actions">
+        <button class="btn btn-secondary report-cancel-btn" id="report-cancel-btn">Cancel</button>
+        <button class="btn btn-primary" id="report-submit-btn">📨 Submit Report</button>
+      </div>
       <p class="report-status" id="report-status"></p>
     </div>
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <footer class="site-footer">
+    <span class="footer-craft">Crafted with ❤️ by <strong>Manime</strong></span>
+    <span class="footer-sep">•</span>
+    <a href="https://github.com/ManikantaBathinedi/Clutch" target="_blank" rel="noopener" class="footer-link">GitHub</a>
+  </footer>
 
   <script src="/js/particles.js"></script>
   <script src="/js/theme.js"></script>

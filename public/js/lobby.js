@@ -835,15 +835,18 @@ function escapeHtml(text) {
 }
 
 function resetGameClientState() {
+  // NOTE: Do NOT include 'game-over' here — it's a lobby-level handler that must persist
   const gameEvents = [
-    'game-state', 'answer-result', 'round-result', 'game-over',
+    'game-state', 'answer-result', 'round-result',
     'word-choices', 'draw-state', 'draw-update', 'drawing-update',
-    'codenames-teams', 'cc-state', 'bj-state', 'bj-update',
+    'codenames-teams', 'codenames-over', 'cc-state', 'cc-over',
+    'bj-state', 'bj-update',
     'hangman-state', 'mm-state', 'spyfall-state', 'wavelength-clue-view',
     'wavelength-guess-view', 'justone-state', 'wordchain-state',
-    'imposter-state', 'ludo-state', 'ludo-update', 'poker-state',
-    'chess-state', 'battleship-state', 'rummy-state', 'coup-state',
-    'wordle-state', 'wordle-update', 'dixit-state'
+    'imposter-state', 'ludo-state', 'ludo-update', 'poker-state', 'poker-update',
+    'chess-state', 'chess-update', 'battleship-state', 'battleship-update',
+    'rummy-state', 'rummy-update', 'coup-state', 'coup-update',
+    'wordle-state', 'wordle-update', 'dixit-state', 'dixit-update'
   ];
 
   gameEvents.forEach(eventName => socket.off(eventName));

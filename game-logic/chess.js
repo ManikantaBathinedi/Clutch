@@ -584,8 +584,8 @@ function getResults(room) {
   if (!gs) return { players: [], gameType: 'chess' };
 
   const results = [];
-  const wp = room.players.find(p => p.id === gs.whiteId);
-  const bp = room.players.find(p => p.id === gs.blackId);
+  const wp = room.players.find(p => p.id === gs.whiteId) || (gs.whiteId === '__chess_ai__' ? { name: gs.whiteName || '🤖 Computer', isHost: false } : null);
+  const bp = room.players.find(p => p.id === gs.blackId) || (gs.blackId === '__chess_ai__' ? { name: gs.blackName || '🤖 Computer', isHost: false } : null);
 
   if (gs.winner === gs.whiteId) {
     if (wp) results.push({ rank: '1st', name: wp.name, score: 1, isHost: wp.isHost });

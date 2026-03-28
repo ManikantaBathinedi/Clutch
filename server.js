@@ -38,7 +38,7 @@ const io = new Server(server, {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json());
+app.use(express.json({ limit: '8mb' }));
 
 // ═══════════════════════════════════════
 // REST API — AUTH & DATA
@@ -146,19 +146,32 @@ app.post('/api/report-issue', reportLimiter, async (req, res) => {
     return res.status(503).json({ error: 'Issue reporting is not configured.' });
   }
 
-  const { title, description, category } = req.body;
+  const { title, description, category, severity, screenshot } = req.body;
   if (!title || !title.trim()) {
     return res.status(400).json({ error: 'Title is required.' });
   }
   const safeTitle = title.trim().slice(0, 200);
   const safeDesc  = (description || '').trim().slice(0, 2000);
-  const safeCategory = ['bug', 'feature', 'other'].includes(category) ? category : 'other';
+  const safeCategory = ['bug', 'feature', 'ui', 'performance', 'other'].includes(category) ? category : 'other';
+  const safeSeverity = ['low', 'medium', 'high'].includes(severity) ? severity : 'medium';
 
   const labels = [];
   if (safeCategory === 'bug') labels.push('bug');
   else if (safeCategory === 'feature') labels.push('enhancement');
+  else if (safeCategory === 'ui') labels.push('ui');
+  else if (safeCategory === 'performance') labels.push('performance');
+  if (safeSeverity === 'high') labels.push('priority: high');
 
-  const body = `**Category:** ${safeCategory}\n\n${safeDesc}\n\n---\n*Submitted via Clutch app*`;
+  let screenshotSection = '';
+  if (screenshot && typeof screenshot === 'string' && screenshot.startsWith('data:image/')) {
+    // Validate size (base64 string under ~7MB → ~5MB file)
+    if (screenshot.length <= 7 * 1024 * 1024) {
+      screenshotSection = `\n\n**Screenshot:**\n![screenshot](${screenshot})`;
+    }
+  }
+
+  const severityEmoji = safeSeverity === 'high' ? '🔴' : safeSeverity === 'medium' ? '🟡' : '🟢';
+  const body = `**Category:** ${safeCategory}\n**Priority:** ${severityEmoji} ${safeSeverity}\n\n${safeDesc}${screenshotSection}\n\n---\n*Submitted via Clutch app*`;
 
   try {
     const resp = await fetch(`https://api.github.com/repos/${ghRepo}/issues`, {
