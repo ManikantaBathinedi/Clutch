@@ -233,6 +233,128 @@ body::after {
   justify-content: center;
 }
 
+.container.home-container {
+  max-width: 900px;
+  justify-content: flex-start;
+  padding-top: 60px;
+}
+
+/* ─── Hero Section ─── */
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 36px;
+  animation: logoIn 0.5s ease-out both;
+}
+
+.hero-logo-svg {
+  width: 80px;
+  height: 80px;
+  filter: drop-shadow(0 0 20px rgba(247, 183, 49, 0.35));
+  animation: heroFloat 3s ease-in-out infinite;
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: center;
+  margin: 0;
+  background: linear-gradient(135deg, var(--accent) 0%, #ff6348 30%, var(--pink) 60%, var(--purple) 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  filter: drop-shadow(0 0 24px rgba(247, 183, 49, 0.3));
+  animation: shimmer 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.hero-tagline {
+  color: var(--text-dim);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin: 4px 0 0;
+}
+
+/* ─── Side-by-side Home Cards ─── */
+.home-cards {
+  display: flex;
+  gap: 24px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.home-cards .card {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-cards .card + .card {
+  margin-top: 0;
+}
+
+.home-divider {
+  flex-direction: column;
+  margin: 0;
+  align-self: stretch;
+  gap: 12px;
+  min-width: 40px;
+  justify-content: center;
+}
+
+.home-divider::before, .home-divider::after {
+  width: 1px;
+  height: auto;
+  flex: 1;
+}
+
+@media (max-width: 700px) {
+  .container.home-container {
+    max-width: 480px;
+  }
+  .hero-title {
+    font-size: 2.8rem;
+    letter-spacing: 6px;
+  }
+  .hero-logo-svg {
+    width: 60px;
+    height: 60px;
+  }
+  .home-cards {
+    flex-direction: column;
+    gap: 0;
+  }
+  .home-cards .card + .card {
+    margin-top: 14px;
+  }
+  .home-divider {
+    flex-direction: row;
+    margin: 20px 0;
+    min-width: unset;
+  }
+  .home-divider::before, .home-divider::after {
+    width: auto;
+    height: 1px;
+    flex: 1;
+  }
+}
+
 .container.lobby-container {
   max-width: 1000px;
   justify-content: flex-start;
@@ -557,7 +679,8 @@ body::after {
   font-weight: 600;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   width: 100%;
   padding: 13px 16px;
   background: var(--bg-input);
@@ -571,7 +694,8 @@ input[type="text"] {
   transition: var(--transition);
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-glow);
 }
@@ -599,7 +723,8 @@ input[type="text"]:focus {
 .avatar-option:hover { transform: scale(1.15); }
 .avatar-option.selected { border: 2px solid var(--accent); background: var(--accent-glow); box-shadow: 0 0 8px var(--accent-glow); transform: scale(1.15); }
 
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
   color: rgba(255, 255, 255, 0.15);
 }
 
@@ -2279,14 +2404,31 @@ input[type="text"]::placeholder {
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-[data-theme="light"] input[type="text"] {
+[data-theme="light"] input[type="text"],
+[data-theme="light"] input[type="password"] {
   background: rgba(255, 255, 255, 0.8);
   border-color: rgba(0, 0, 0, 0.12);
   color: var(--text);
 }
 
-[data-theme="light"] input[type="text"]::placeholder {
+[data-theme="light"] input[type="text"]::placeholder,
+[data-theme="light"] input[type="password"]::placeholder {
   color: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .report-modal-pro select,
+[data-theme="light"] .report-modal-pro textarea {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: var(--text);
+}
+[data-theme="light"] .report-modal-pro textarea::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+[data-theme="light"] .report-modal-pro select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 [data-theme="light"] .room-code-input {
@@ -2656,6 +2798,54 @@ input[type="text"]::placeholder {
   color: var(--text-dim);
   font-weight: 400;
 }
+
+/* ─── Report modal form controls ─── */
+.report-modal-pro select,
+.report-modal-pro textarea,
+.report-modal-pro input[type="text"] {
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg-input);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: var(--font);
+  font-weight: 500;
+  outline: none;
+  transition: var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.report-modal-pro select:focus,
+.report-modal-pro textarea:focus,
+.report-modal-pro input[type="text"]:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.report-modal-pro select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 34px;
+  cursor: pointer;
+}
+.report-modal-pro select option {
+  background: var(--bg-card);
+  color: var(--text);
+  padding: 8px;
+}
+.report-modal-pro textarea {
+  resize: vertical;
+  min-height: 90px;
+  line-height: 1.5;
+}
+.report-modal-pro textarea::placeholder,
+.report-modal-pro input[type="text"]::placeholder {
+  color: var(--text-dim);
+  opacity: 0.5;
+}
+
 .report-actions {
   display: flex;
   justify-content: flex-end;

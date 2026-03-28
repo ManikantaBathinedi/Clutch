@@ -1,7 +1,7 @@
 // Theme toggle — persists via localStorage
 (function () {
   const toggle = document.getElementById('theme-toggle');
-  const saved = localStorage.getItem('clutch-theme') || 'dark';
+  const saved = localStorage.getItem('clutch-theme') || 'light';
 
   applyTheme(saved);
 
