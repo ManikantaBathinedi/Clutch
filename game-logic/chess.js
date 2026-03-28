@@ -453,7 +453,8 @@ function makeMove(room, playerId, fromR, fromC, toR, toC, promotion) {
     gs.winner = null;
   }
 
-  return { success: true };
+  const gameOver = gs.phase === 'checkmate' || gs.phase === 'stalemate' || gs.phase === 'draw';
+  return { success: true, gameOver };
 }
 
 function isInsufficientMaterial(board) {

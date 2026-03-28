@@ -1622,6 +1622,13 @@ io.on('connection', (socket) => {
       room.players.forEach(p => {
         io.to(p.id).emit('ludo-update', ludoLogic.getPlayerView(room, p.id));
       });
+      if (result.gameOver) {
+        const results = ludoLogic.getResults(room);
+        recordGameResults(room);
+        io.to(room.code).emit('game-over', results);
+        room.status = 'lobby';
+        room.currentGame = null;
+      }
     }
   });
 
@@ -1633,6 +1640,13 @@ io.on('connection', (socket) => {
       room.players.forEach(p => {
         io.to(p.id).emit('ludo-update', ludoLogic.getPlayerView(room, p.id));
       });
+      if (result.gameOver) {
+        const results = ludoLogic.getResults(room);
+        recordGameResults(room);
+        io.to(room.code).emit('game-over', results);
+        room.status = 'lobby';
+        room.currentGame = null;
+      }
     }
   });
 
@@ -1706,11 +1720,19 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.currentGame !== 'poker' || room.hostId !== socket.id) return;
     const result = pokerLogic.newHand(room);
-    if (result) {
-      room.players.forEach(p => {
-        io.to(p.id).emit('poker-update', pokerLogic.getPlayerView(room, p.id));
-      });
+    if (!result) return;
+    const gs = room.gameState;
+    if (gs.phase === 'finished') {
+      const results = pokerLogic.getResults(room);
+      recordGameResults(room);
+      io.to(room.code).emit('game-over', results);
+      room.status = 'lobby';
+      room.currentGame = null;
+      return;
     }
+    room.players.forEach(p => {
+      io.to(p.id).emit('poker-update', pokerLogic.getPlayerView(room, p.id));
+    });
   });
 
   socket.on('poker-end', () => {
@@ -1802,7 +1824,7 @@ io.on('connection', (socket) => {
       const view = chessLogic.getPlayerView(room, p.id);
       if (view) io.to(p.id).emit('chess-update', view);
     });
-    if (result.drawn) {
+    if (result.accepted) {
       const results = chessLogic.getResults(room);
       recordGameResults(room);
       io.to(room.code).emit('game-over', results);
@@ -2037,7 +2059,7 @@ io.on('connection', (socket) => {
       const view = wordleLogic.getPlayerView(room, p.id);
       if (view) io.to(p.id).emit('wordle-update', view);
     });
-    if (result.roundOver) {
+    if (result.allDone) {
       // Check if game is over
       const gs = room.gameState;
       if (gs.phase === 'finished') {
@@ -2053,8 +2075,16 @@ io.on('connection', (socket) => {
   socket.on('wordle-next', () => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.currentGame !== 'wordle' || room.hostId !== socket.id) return;
-    const result = wordleLogic.nextRound(room);
-    if (!result) return;
+    const hasNext = wordleLogic.nextRound(room);
+    if (!hasNext) {
+      // All rounds done — game is finished
+      const results = wordleLogic.getResults(room);
+      recordGameResults(room);
+      io.to(room.code).emit('game-over', results);
+      room.status = 'lobby';
+      room.currentGame = null;
+      return;
+    }
     room.players.forEach(p => {
       const view = wordleLogic.getPlayerView(room, p.id);
       if (view) io.to(p.id).emit('wordle-update', view);

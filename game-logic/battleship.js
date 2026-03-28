@@ -171,6 +171,7 @@ function fireShot(room, playerId, row, col) {
       gs.winner = playerId;
       const winPlayer = room.players.find(p => p.id === playerId);
       if (winPlayer) winPlayer.score = (winPlayer.score || 0) + 1;
+      result.gameOver = true;
     }
   } else {
     // Miss
