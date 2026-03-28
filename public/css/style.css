@@ -3442,7 +3442,7 @@ input[type="password"]::placeholder {
 
 /* When status strip is visible, push game content below it */
 .game-view-with-strip {
-  padding-top: 48px;
+  padding-top: 58px !important;
 }
 
 /* Hide old floating buttons when strip is active */
