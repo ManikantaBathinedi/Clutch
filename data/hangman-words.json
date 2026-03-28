@@ -1,0 +1,43 @@
+{
+  "animals": [
+    "elephant", "giraffe", "penguin", "dolphin", "cheetah", "kangaroo", "octopus", "chameleon",
+    "butterfly", "alligator", "hippopotamus", "rhinoceros", "flamingo", "pelican", "lobster",
+    "gorilla", "leopard", "hamster", "parrot", "tortoise", "scorpion", "porcupine", "gazelle",
+    "armadillo", "jellyfish", "squirrel", "hedgehog", "mongoose", "ostrich", "pheasant"
+  ],
+  "movies": [
+    "inception", "gladiator", "avatar", "titanic", "interstellar", "parasite", "joker",
+    "frozen", "gravity", "arrival", "dunkirk", "whiplash", "spotlight", "network",
+    "jaws", "psycho", "vertigo", "goodfellas", "braveheart", "platoon",
+    "skyfall", "casino", "memento", "aliens", "predator", "aladdin", "mulan",
+    "bambi", "shrek", "ratatouille"
+  ],
+  "countries": [
+    "australia", "argentina", "brazil", "cambodia", "denmark", "ethiopia", "finland",
+    "germany", "hungary", "indonesia", "jamaica", "kenya", "luxembourg", "madagascar",
+    "nicaragua", "pakistan", "romania", "singapore", "thailand", "ukraine",
+    "venezuela", "zimbabwe", "portugal", "switzerland", "colombia", "philippines",
+    "guatemala", "mozambique", "afghanistan", "bangladesh"
+  ],
+  "food": [
+    "hamburger", "spaghetti", "croissant", "avocado", "chocolate", "pancakes", "burrito",
+    "lasagna", "dumplings", "guacamole", "bruschetta", "quesadilla", "macaroni", "pretzel",
+    "meatball", "sandwich", "mushroom", "cinnamon", "pineapple", "blueberry",
+    "coconut", "caramel", "noodles", "popcorn", "omelette", "sausage", "biscuit",
+    "broccoli", "zucchini", "cucumber"
+  ],
+  "technology": [
+    "algorithm", "bluetooth", "computer", "database", "ethernet", "firewall", "graphics",
+    "hardware", "internet", "javascript", "keyboard", "laptop", "malware", "network",
+    "operating", "processor", "quantum", "robotics", "software", "terminal",
+    "username", "virtual", "wireless", "cybersecurity", "bandwidth", "encryption",
+    "interface", "microchip", "satellite", "streaming"
+  ],
+  "sports": [
+    "basketball", "football", "baseball", "volleyball", "swimming", "wrestling", "archery",
+    "badminton", "billiards", "bowling", "cricket", "cycling", "fencing", "gymnastics",
+    "handball", "hockey", "karate", "lacrosse", "marathon", "rowing",
+    "sailing", "skateboard", "snowboard", "surfing", "tennis", "triathlon",
+    "waterpolo", "sprinting", "javelin", "dribbling"
+  ]
+}

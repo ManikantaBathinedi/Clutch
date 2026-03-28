@@ -1,0 +1,122 @@
+{
+  "Animals": [
+    { "word": "Elephant", "clue": "Something big and heavy" },
+    { "word": "Penguin", "clue": "Related to cold places" },
+    { "word": "Dolphin", "clue": "Known for being clever" },
+    { "word": "Giraffe", "clue": "Stands out in a crowd" },
+    { "word": "Kangaroo", "clue": "Associated with jumping" },
+    { "word": "Chameleon", "clue": "Hard to spot sometimes" },
+    { "word": "Octopus", "clue": "Has many parts" },
+    { "word": "Panda", "clue": "Two-toned and popular" },
+    { "word": "Parrot", "clue": "Copies what it hears" },
+    { "word": "Cheetah", "clue": "Known for speed" }
+  ],
+  "Food": [
+    { "word": "Pizza", "clue": "Often shared at parties" },
+    { "word": "Sushi", "clue": "Comes from Asia" },
+    { "word": "Hamburger", "clue": "Classic American thing" },
+    { "word": "Pancake", "clue": "Usually flat and round" },
+    { "word": "Chocolate", "clue": "A popular gift" },
+    { "word": "Tacos", "clue": "You fold it" },
+    { "word": "Ice Cream", "clue": "Best in summer" },
+    { "word": "Popcorn", "clue": "Goes with entertainment" },
+    { "word": "Watermelon", "clue": "Mostly liquid inside" },
+    { "word": "Donut", "clue": "Has a hole in it" }
+  ],
+  "Sports": [
+    { "word": "Basketball", "clue": "Involves a lot of bouncing" },
+    { "word": "Swimming", "clue": "You get wet doing it" },
+    { "word": "Tennis", "clue": "Back and forth action" },
+    { "word": "Soccer", "clue": "Huge international following" },
+    { "word": "Skateboarding", "clue": "Popular with younger people" },
+    { "word": "Boxing", "clue": "Very physical and intense" },
+    { "word": "Surfing", "clue": "You need nature to cooperate" },
+    { "word": "Golf", "clue": "Requires patience and precision" },
+    { "word": "Archery", "clue": "Needs a steady hand" },
+    { "word": "Wrestling", "clue": "Very close contact" }
+  ],
+  "Movies": [
+    { "word": "Titanic", "clue": "A tragic love story" },
+    { "word": "Harry Potter", "clue": "A long fantasy series" },
+    { "word": "Star Wars", "clue": "Good vs evil saga" },
+    { "word": "The Lion King", "clue": "About growing up and responsibility" },
+    { "word": "Jurassic Park", "clue": "Things go terribly wrong" },
+    { "word": "Finding Nemo", "clue": "A journey to reunite" },
+    { "word": "Frozen", "clue": "About sisters and power" },
+    { "word": "Spider-Man", "clue": "A teenager with a secret" },
+    { "word": "Avatar", "clue": "Set in another world" },
+    { "word": "The Matrix", "clue": "Nothing is what it seems" }
+  ],
+  "Places": [
+    { "word": "Beach", "clue": "People go to relax here" },
+    { "word": "Library", "clue": "You should be quiet here" },
+    { "word": "Hospital", "clue": "Open 24 hours" },
+    { "word": "Airport", "clue": "Always busy and noisy" },
+    { "word": "Museum", "clue": "Don't touch anything" },
+    { "word": "Amusement Park", "clue": "Long lines but worth it" },
+    { "word": "School", "clue": "Everyone has been here" },
+    { "word": "Restaurant", "clue": "Someone serves you" },
+    { "word": "Space Station", "clue": "Very few people go here" },
+    { "word": "Castle", "clue": "Old and grand" }
+  ],
+  "Professions": [
+    { "word": "Astronaut", "clue": "Very few people do this" },
+    { "word": "Chef", "clue": "Uses heat and creativity" },
+    { "word": "Firefighter", "clue": "Runs toward danger" },
+    { "word": "Pilot", "clue": "People trust you with their lives" },
+    { "word": "Detective", "clue": "Always asking questions" },
+    { "word": "Surgeon", "clue": "Needs very steady hands" },
+    { "word": "Architect", "clue": "Plans things carefully" },
+    { "word": "Magician", "clue": "Things disappear around them" },
+    { "word": "Veterinarian", "clue": "Works with non-humans" },
+    { "word": "Lifeguard", "clue": "Watches from above" }
+  ],
+  "Things": [
+    { "word": "Umbrella", "clue": "Useful on bad days" },
+    { "word": "Telescope", "clue": "Makes distant things closer" },
+    { "word": "Piano", "clue": "Black and white in a row" },
+    { "word": "Compass", "clue": "Helps when you're lost" },
+    { "word": "Candle", "clue": "Creates a warm glow" },
+    { "word": "Trampoline", "clue": "Defies gravity temporarily" },
+    { "word": "Mirror", "clue": "Shows you the truth" },
+    { "word": "Backpack", "clue": "You carry it everywhere" },
+    { "word": "Binoculars", "clue": "For seeing what's far away" },
+    { "word": "Skateboard", "clue": "Rolls on a surface" }
+  ],
+  "Nature": [
+    { "word": "Volcano", "clue": "Calm until it's not" },
+    { "word": "Rainbow", "clue": "Appears after the bad times" },
+    { "word": "Tornado", "clue": "Everything spins" },
+    { "word": "Glacier", "clue": "Moves very slowly" },
+    { "word": "Coral Reef", "clue": "Alive but looks still" },
+    { "word": "Waterfall", "clue": "Gravity does all the work" },
+    { "word": "Aurora", "clue": "A rare light show" },
+    { "word": "Desert", "clue": "Almost nothing survives here" },
+    { "word": "Earthquake", "clue": "Everything shakes" },
+    { "word": "Lightning", "clue": "Gone in a flash" }
+  ],
+  "Music": [
+    { "word": "Guitar", "clue": "You hold it close" },
+    { "word": "Drums", "clue": "Involves a lot of hitting" },
+    { "word": "Violin", "clue": "Can sound sad or beautiful" },
+    { "word": "Trumpet", "clue": "You need good lungs" },
+    { "word": "Karaoke", "clue": "Often embarrassing but fun" },
+    { "word": "Concert", "clue": "Crowds gather for this" },
+    { "word": "DJ", "clue": "Makes the party happen" },
+    { "word": "Opera", "clue": "Dramatic and emotional" },
+    { "word": "Headphones", "clue": "Blocks out the world" },
+    { "word": "Microphone", "clue": "Makes you louder" }
+  ],
+  "Technology": [
+    { "word": "Robot", "clue": "Does things automatically" },
+    { "word": "Drone", "clue": "Sees things from above" },
+    { "word": "Smartphone", "clue": "Everyone depends on it" },
+    { "word": "Virtual Reality", "clue": "Tricks your senses" },
+    { "word": "WiFi", "clue": "Invisible but essential" },
+    { "word": "Satellite", "clue": "Always moving overhead" },
+    { "word": "3D Printer", "clue": "Creates something from nothing" },
+    { "word": "GPS", "clue": "Knows exactly where you are" },
+    { "word": "Bluetooth", "clue": "Connects things nearby" },
+    { "word": "Selfie", "clue": "Everyone does it now" }
+  ]
+}

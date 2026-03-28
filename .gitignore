@@ -1,0 +1,6 @@
+node_modules/
+.env
+.DS_Store
+clutch.db
+clutch.db-wal
+clutch.db-shm

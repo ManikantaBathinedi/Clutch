@@ -1,0 +1,380 @@
+{
+  "trivia": {
+    "name": "Trivia",
+    "icon": "🧠",
+    "players": "2+",
+    "summary": "Test your knowledge across multiple categories!",
+    "rules": [
+      "A question is shown with 4 multiple-choice answers",
+      "Answer as fast as you can — faster answers earn more points",
+      "The host can pick a category or play all randomly",
+      "After each question, scores are shown on the leaderboard",
+      "Base score is 500 points, scaled by how quickly you answer"
+    ],
+    "tips": "Read the full question before answering — accuracy beats speed!"
+  },
+  "wordscramble": {
+    "name": "Word Scramble",
+    "icon": "🔤",
+    "players": "2+",
+    "summary": "Unscramble jumbled letters to reveal the hidden word!",
+    "rules": [
+      "A word is scrambled and shown as jumbled letters",
+      "Type your guess in the input box and submit",
+      "Faster correct answers earn more points",
+      "Hints may appear if no one guesses in time",
+      "Categories can be selected for themed words"
+    ],
+    "tips": "Look for common letter patterns like -tion, -ing, or -ness."
+  },
+  "speedmath": {
+    "name": "Speed Math",
+    "icon": "⚡",
+    "players": "2+",
+    "summary": "Solve math equations as fast as possible!",
+    "rules": [
+      "A math equation appears (addition, subtraction, or multiplication)",
+      "Type the correct answer as a number",
+      "First correct answer gets the most points (500), each subsequent correct answer gets less",
+      "Problems get harder as the game progresses",
+      "If time runs out, no points are awarded"
+    ],
+    "tips": "For multiplication, try breaking numbers into easier parts (e.g., 15×12 = 15×10 + 15×2)."
+  },
+  "emoji": {
+    "name": "Emoji Decoder",
+    "icon": "😎",
+    "players": "2+",
+    "summary": "Guess the movie, phrase, or thing from emoji clues!",
+    "rules": [
+      "A series of emojis represents a movie, phrase, or concept",
+      "Type your guess — it must match closely (minor differences OK)",
+      "Faster correct guesses earn more points",
+      "Hints are given gradually if no one guesses correctly",
+      "Categories include movies, foods, animals, and more"
+    ],
+    "tips": "Think about what each emoji literally represents and how they connect."
+  },
+  "drawguess": {
+    "name": "Draw & Guess",
+    "icon": "🎨",
+    "players": "3+",
+    "summary": "One player draws, everyone else guesses the word!",
+    "rules": [
+      "The drawer picks a word from 3 choices",
+      "Using the canvas, draw the word — NO letters or numbers allowed",
+      "Other players type guesses in the chat",
+      "Correct guessers AND the drawer earn points",
+      "Earlier correct guesses earn more points for both guesser and drawer",
+      "Each player takes turns drawing"
+    ],
+    "tips": "Start with the basic shape/outline, then add details. Simple drawings are often clearest!"
+  },
+  "codenames": {
+    "name": "Codenames",
+    "icon": "🕵️",
+    "players": "4+",
+    "summary": "Give one-word clues to help your team find their agents!",
+    "rules": [
+      "Split into two teams: Red and Blue",
+      "Each team has a Spymaster who sees which words belong to which team",
+      "Spymasters give a one-word clue plus a number (how many words it relates to)",
+      "Team members tap words they think match the clue",
+      "Avoid the assassin word — touching it loses the game instantly!",
+      "First team to find all their words wins"
+    ],
+    "tips": "As Spymaster, find connections between multiple words for bigger combos."
+  },
+  "colorclash": {
+    "name": "Color Clash",
+    "icon": "🎴",
+    "players": "2+",
+    "summary": "Match colors or numbers to get rid of your cards first!",
+    "rules": [
+      "Each player gets 7 cards with colors and numbers",
+      "Match the top card by color OR number to play a card",
+      "Special cards: Skip, Reverse, Draw Two, Wild, Wild Draw Four",
+      "If you can't play, draw a card from the deck",
+      "First player to empty their hand wins the round",
+      "Call 'Clash!' when you have one card left"
+    ],
+    "tips": "Save wild cards for when you're stuck. Try to change to a color you have most of."
+  },
+  "blackjack": {
+    "name": "Blackjack",
+    "icon": "🂡",
+    "players": "1+",
+    "summary": "Get as close to 21 as possible without going over!",
+    "rules": [
+      "Place your bet at the start of each round",
+      "You're dealt 2 cards — try to get as close to 21 as possible",
+      "Number cards = face value, Face cards = 10, Ace = 1 or 11",
+      "Hit to draw another card, Stand to keep your hand",
+      "Going over 21 is a 'bust' — you lose your bet",
+      "Beat the dealer's hand to win double your bet"
+    ],
+    "tips": "Stand on 17 or higher. Hit on 11 or lower. Be cautious with 12-16."
+  },
+  "hangman": {
+    "name": "Hangman",
+    "icon": "💀",
+    "players": "2+",
+    "summary": "Guess the hidden word one letter at a time before running out of chances!",
+    "rules": [
+      "A word is hidden and shown as blank spaces",
+      "Players take turns guessing letters",
+      "Correct letters are revealed in their positions",
+      "Wrong guesses add a body part to the hangman (6 max)",
+      "If the full hangman is drawn, the word is revealed and the round ends",
+      "Guess the full word to earn bonus points"
+    ],
+    "tips": "Start with common letters: E, T, A, O, I, N, S, R."
+  },
+  "memorymatch": {
+    "name": "Memory Match",
+    "icon": "🃏",
+    "players": "2+",
+    "summary": "Flip cards and find matching pairs!",
+    "rules": [
+      "Cards are laid face-down in a grid",
+      "On your turn, flip two cards",
+      "If they match, you keep the pair and go again",
+      "If they don't match, cards flip back and the next player goes",
+      "The player with the most pairs at the end wins",
+      "Remember where cards are to find matches faster"
+    ],
+    "tips": "Focus on remembering cards others have flipped. Watch every turn carefully!"
+  },
+  "spyfall": {
+    "name": "Spyfall",
+    "icon": "🕵️‍♂️",
+    "players": "4+",
+    "summary": "Find the spy — or bluff your way through if you're the spy!",
+    "rules": [
+      "Everyone gets the same location card — except the spy, who gets nothing",
+      "Players take turns asking each other questions about the location",
+      "Non-spies: Answer vaguely enough that the spy can't figure out the location",
+      "The spy: Bluff and try to figure out where everyone is",
+      "At any time, players can vote on who they think the spy is",
+      "Spy wins by guessing the location OR by not being caught"
+    ],
+    "tips": "As a non-spy, be specific enough to prove you know the location but vague enough to protect it."
+  },
+  "wavelength": {
+    "name": "Wavelength",
+    "icon": "📡",
+    "players": "2+",
+    "summary": "Guess where a clue falls on a spectrum between two extremes!",
+    "rules": [
+      "A spectrum appears with two opposing concepts (e.g., Hot ↔ Cold)",
+      "The clue-giver sees where the target is on the spectrum",
+      "They give a one-word or short clue to help others guess the position",
+      "Other players position their guess on the spectrum",
+      "Points are awarded based on how close each guess is to the target",
+      "Players take turns being the clue-giver"
+    ],
+    "tips": "As clue-giver, think of something that clearly sits at that specific point on the spectrum."
+  },
+  "justone": {
+    "name": "Just One",
+    "icon": "☝️",
+    "players": "3+",
+    "summary": "Everyone writes a one-word clue, but duplicates are removed!",
+    "rules": [
+      "One player is the guesser and cannot see the secret word",
+      "All other players write a one-word clue to help the guesser",
+      "Duplicate clues are eliminated — only unique clues are shown",
+      "The guesser sees the remaining clues and makes ONE guess",
+      "The team scores if the guesser gets it right",
+      "Each player takes a turn being the guesser"
+    ],
+    "tips": "Avoid obvious clues that others will also write. Think of creative, unique associations!"
+  },
+  "wouldyourather": {
+    "name": "Would You Rather",
+    "icon": "🤔",
+    "players": "2+",
+    "summary": "Pick between two options and see what everyone else chose!",
+    "rules": [
+      "Two options are presented (e.g., 'fly' vs 'be invisible')",
+      "Everyone votes for their preferred option",
+      "After all votes are in, results are revealed with percentages",
+      "You score points by being in the majority — popular opinion wins!",
+      "Voting is anonymous until the reveal",
+      "Discuss and debate after each round!"
+    ],
+    "tips": "Think about what most people would choose, not just what you'd prefer."
+  },
+  "wordchain": {
+    "name": "Word Chain",
+    "icon": "🔗",
+    "players": "2+",
+    "summary": "Chain words together — each word must start with the last letter of the previous word!",
+    "rules": [
+      "A starting word is given",
+      "Type a word that starts with the LAST letter of the previous word",
+      "Words must be real English words (3+ letters)",
+      "No repeating words that have already been used",
+      "You have limited time for each turn — be quick!",
+      "Miss your turn or repeat a word and you're eliminated"
+    ],
+    "tips": "Avoid words ending in X, Z, or Q — they're harder to chain from!"
+  },
+  "imposter": {
+    "name": "Imposter",
+    "icon": "🤫",
+    "players": "4+",
+    "summary": "One player is the imposter with only a vague clue — can they survive or will the group identify them?",
+    "rules": [
+      "Each round has a new secret word, a new category, and a new randomly chosen imposter",
+      "Everyone sees the word — except the imposter, who only gets a vague clue",
+      "Players take turns describing the word without saying it directly",
+      "The imposter must blend in and describe as if they know the word",
+      "After descriptions, everyone votes — a vote needs >50% majority to count",
+      "You can skip your vote if you're unsure — if >50% skip, the vote is skipped",
+      "If the vote fails (no majority, wrong person, or skip), you get another describe + vote attempt",
+      "The number of vote attempts per word is set in game settings (default: 2)",
+      "If the imposter is correctly voted out, they get one last chance to guess the word",
+      "Nobody is ejected — everyone plays all rounds regardless of vote results",
+      "Points: Imposter survives = 300pts, Imposter guesses word = 500pts, Villagers catch imposter = 200pts each"
+    ],
+    "tips": "As a villager, be specific enough to prove you know the word but vague enough that the imposter can't figure it out. As the imposter, listen carefully to others' descriptions to piece together the word!"
+  },
+  "ludo": {
+    "name": "Ludo",
+    "icon": "🎲",
+    "players": "2-4",
+    "summary": "Classic board game — roll the dice and race all 4 tokens from base to home before your opponents!",
+    "rules": [
+      "Each player has 4 colored tokens starting in their base",
+      "Roll a 6 to move a token out of the base onto the starting square",
+      "Move a token forward by the number shown on the dice",
+      "Rolling a 6 gives you an extra turn (but 3 sixes in a row = lose your turn)",
+      "Land on an opponent's token to capture it and send it back to their base",
+      "Tokens on star (★) squares are safe and cannot be captured",
+      "Enter your home stretch by reaching the colored lane leading to the center",
+      "You must roll the exact number needed to reach home — no overshooting",
+      "First player to get all 4 tokens home wins (500 points!)",
+      "Capturing an opponent's token earns you a bonus turn"
+    ],
+    "tips": "Balance between advancing tokens and keeping them safe. Don't leave tokens on unsafe squares when opponents are close behind!"
+  },
+  "poker": {
+    "name": "Poker",
+    "icon": "🃏",
+    "players": "2-8",
+    "summary": "Texas Hold'em — use your 2 hole cards and 5 community cards to make the best 5-card hand and win the pot!",
+    "rules": [
+      "Each player starts with 1000 chips. Small blind: 10, Big blind: 20",
+      "Each player is dealt 2 private hole cards (only you can see them)",
+      "Pre-Flop: bet, call, raise or fold before the community cards are revealed",
+      "Flop: 3 community cards are revealed — another betting round follows",
+      "Turn: a 4th community card is revealed — another betting round",
+      "River: the 5th and final community card — last betting round",
+      "Showdown: remaining players reveal hands; best 5-card hand wins the pot",
+      "Hand rankings (best to worst): Royal Flush, Straight Flush, Four of a Kind, Full House, Flush, Straight, Three of a Kind, Two Pair, One Pair, High Card",
+      "You can go All-In to bet all your chips at any time",
+      "Player with all the chips (or most chips when host ends game) wins!"
+    ],
+    "tips": "Position matters — acting last gives you more information. Don't chase bad hands. Know when to fold!"
+  },
+  "chess": {
+    "name": "Chess",
+    "icon": "♟️",
+    "players": "2",
+    "summary": "The classic strategy game — checkmate your opponent's king!",
+    "rules": [
+      "White moves first, then players alternate turns",
+      "Each piece type moves differently: pawns forward, rooks in straight lines, bishops diagonally, knights in an L-shape, queens combine rook + bishop, king one square any direction",
+      "Capture opponent pieces by moving to their square",
+      "The king is in 'check' when threatened — you must escape check on your turn",
+      "Checkmate occurs when the king cannot escape check — game over!",
+      "Special moves: castling (king + rook swap), en passant (pawn capture), pawn promotion (pawn reaches last rank)",
+      "Stalemate (no legal moves but not in check) results in a draw",
+      "Players can offer draws or resign at any time"
+    ],
+    "tips": "Control the center of the board. Develop your pieces (knights and bishops) early. Castle to protect your king!"
+  },
+  "battleship": {
+    "name": "Battleship",
+    "icon": "🚢",
+    "players": "2",
+    "summary": "Deploy your fleet and sink the enemy ships before they sink yours!",
+    "rules": [
+      "Each player places 5 ships on their 10×10 grid: Carrier (5), Battleship (4), Cruiser (3), Submarine (3), Destroyer (2)",
+      "Ships can be placed horizontally or vertically — no overlapping or going off the grid",
+      "Players take turns firing at coordinates on the opponent's grid",
+      "A hit is marked with 💥 and a miss with a dot",
+      "When all cells of a ship are hit, it's sunk!",
+      "First player to sink all 5 enemy ships wins"
+    ],
+    "tips": "Don't cluster your ships together. Use a checkerboard search pattern to find ships efficiently!"
+  },
+  "rummy": {
+    "name": "Rummy",
+    "icon": "🃏",
+    "players": "2-4",
+    "summary": "Form sets and runs from your cards to go out first!",
+    "rules": [
+      "Each player is dealt a hand of cards from a standard 52-card deck",
+      "On your turn: draw one card (from deck or discard pile), then discard one card",
+      "Form melds: sets (3-4 cards of same rank, different suits) or runs (3+ consecutive cards of same suit)",
+      "Lay melds on the table by selecting 3+ cards and clicking 'Lay Meld'",
+      "You can also add cards to existing melds on the table",
+      "First player to empty their hand (after discarding) wins!"
+    ],
+    "tips": "Keep track of what opponents pick from the discard pile. Hold cards that give you multiple meld options!"
+  },
+  "coup": {
+    "name": "Coup",
+    "icon": "⚔️",
+    "players": "3-6",
+    "summary": "Bluff, deceive, and eliminate opponents in this game of political intrigue!",
+    "rules": [
+      "Each player starts with 2 influence cards (face down) and 2 coins",
+      "On your turn, choose an action: Income (+1), Foreign Aid (+2), Coup (pay 7, target loses influence), or a character action",
+      "Character actions: Duke (Tax +3), Assassin (pay 3 to assassinate), Captain (steal 2 coins), Ambassador (exchange cards with deck)",
+      "Any player can challenge an action — if the actor doesn't have the claimed character, they lose influence",
+      "If a challenge fails (actor DID have the card), the challenger loses influence instead",
+      "Some characters can block: Duke blocks Foreign Aid, Contessa blocks Assassination, Captain/Ambassador block Stealing",
+      "Blocks can also be challenged!",
+      "With 10+ coins, you MUST coup — no other action allowed",
+      "Lose both influence cards and you're eliminated. Last player standing wins!"
+    ],
+    "tips": "Bluffing is key! Claim roles you don't have, but be ready to be challenged. Watch what others claim to catch liars."
+  },
+  "wordle": {
+    "name": "Wordle",
+    "icon": "🟩",
+    "players": "2+",
+    "summary": "Guess the 5-letter word in 6 tries — compete to solve it fastest!",
+    "rules": [
+      "A secret 5-letter word is chosen each round",
+      "Type a valid 5-letter word and press Enter to guess",
+      "Green 🟩 means the letter is correct and in the right position",
+      "Yellow 🟨 means the letter is in the word but in the wrong position",
+      "Gray ⬜ means the letter is not in the word at all",
+      "You have 6 guesses per round to find the word",
+      "All players play simultaneously — race to solve it first!",
+      "Multiple rounds are played with a scoreboard tracking wins"
+    ],
+    "tips": "Start with words that have common letters like CRANE, SLATE, or AUDIO. Eliminate vowels early!"
+  },
+  "dixit": {
+    "name": "Dixit",
+    "icon": "🎨",
+    "players": "3-6",
+    "summary": "A creative storytelling game — give clues about your card art and fool the others!",
+    "rules": [
+      "Each player has a hand of cards with unique emoji art",
+      "The storyteller selects a card and gives a clue (word, phrase, or sentence) about it",
+      "Other players choose a card from their hand that best matches the clue",
+      "All played cards are shuffled and revealed — players vote on which card is the storyteller's",
+      "If ALL or NO players guess correctly, the storyteller gets 0 points and everyone else gets 2",
+      "If some but not all guess correctly, the storyteller and correct guessers get 3 points each",
+      "Players also get 1 bonus point for each vote on their decoy card",
+      "First player to reach the target score wins!"
+    ],
+    "tips": "As storyteller, be subtle — too obvious and everyone guesses right (0 points). Too obscure and no one gets it!"
+  }
+}

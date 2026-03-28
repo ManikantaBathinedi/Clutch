@@ -1,0 +1,492 @@
+{
+  "animals": [
+    {
+      "word": "parrot",
+      "hint": "A colorful bird"
+    },
+    {
+      "word": "tiger",
+      "hint": "A striped big cat"
+    },
+    {
+      "word": "whale",
+      "hint": "Largest sea creature"
+    },
+    {
+      "word": "donkey",
+      "hint": "An animal like a horse"
+    },
+    {
+      "word": "kitten",
+      "hint": "A baby cat"
+    },
+    {
+      "word": "falcon",
+      "hint": "A fast bird of prey"
+    },
+    {
+      "word": "rabbit",
+      "hint": "Hops around"
+    },
+    {
+      "word": "insect",
+      "hint": "Small crawling creature"
+    },
+    {
+      "word": "lizard",
+      "hint": "A scaly reptile"
+    },
+    {
+      "word": "oyster",
+      "hint": "Shellfish with a pearl"
+    },
+    {
+      "word": "raven",
+      "hint": "A large black bird"
+    },
+    {
+      "word": "cheetah",
+      "hint": "Fastest land animal"
+    },
+    {
+      "word": "mammoth",
+      "hint": "Ancient hairy elephant"
+    },
+    {
+      "word": "monkey",
+      "hint": "Loves bananas"
+    },
+    {
+      "word": "salmon",
+      "hint": "A fish that swims upstream"
+    },
+    {
+      "word": "toucan",
+      "hint": "Bird with a big beak"
+    },
+    {
+      "word": "badger",
+      "hint": "Black and white forest animal"
+    },
+    {
+      "word": "spider",
+      "hint": "Eight-legged creature"
+    },
+    {
+      "word": "parrot",
+      "hint": "It can talk like humans"
+    },
+    {
+      "word": "turtle",
+      "hint": "Carries its home"
+    }
+  ],
+  "nature": [
+    {
+      "word": "planet",
+      "hint": "Something in space"
+    },
+    {
+      "word": "forest",
+      "hint": "Full of trees"
+    },
+    {
+      "word": "island",
+      "hint": "Land surrounded by water"
+    },
+    {
+      "word": "jungle",
+      "hint": "Dense tropical area"
+    },
+    {
+      "word": "ocean",
+      "hint": "Large body of water"
+    },
+    {
+      "word": "storm",
+      "hint": "Bad weather"
+    },
+    {
+      "word": "desert",
+      "hint": "Hot and sandy place"
+    },
+    {
+      "word": "sunset",
+      "hint": "End of the day sky"
+    },
+    {
+      "word": "autumn",
+      "hint": "Leaves change color"
+    },
+    {
+      "word": "breeze",
+      "hint": "A gentle wind"
+    },
+    {
+      "word": "cactus",
+      "hint": "Desert plant with thorns"
+    },
+    {
+      "word": "canyon",
+      "hint": "Deep valley with cliffs"
+    },
+    {
+      "word": "glacier",
+      "hint": "Giant moving ice"
+    },
+    {
+      "word": "meteor",
+      "hint": "Shooting star"
+    },
+    {
+      "word": "comet",
+      "hint": "Icy space traveler"
+    },
+    {
+      "word": "summit",
+      "hint": "Top of a mountain"
+    },
+    {
+      "word": "eclipse",
+      "hint": "Moon blocks the sun"
+    },
+    {
+      "word": "bamboo",
+      "hint": "Pandas eat this"
+    },
+    {
+      "word": "oxygen",
+      "hint": "Gas we breathe"
+    },
+    {
+      "word": "frozen",
+      "hint": "Extremely cold"
+    },
+    {
+      "word": "galaxy",
+      "hint": "Contains billions of stars"
+    },
+    {
+      "word": "fossil",
+      "hint": "Ancient remains in rock"
+    },
+    {
+      "word": "feather",
+      "hint": "Found on a bird"
+    },
+    {
+      "word": "cobweb",
+      "hint": "A spider makes this"
+    },
+    {
+      "word": "prism",
+      "hint": "Splits light into colors"
+    }
+  ],
+  "food": [
+    {
+      "word": "banana",
+      "hint": "A yellow fruit"
+    },
+    {
+      "word": "lemon",
+      "hint": "A sour citrus fruit"
+    },
+    {
+      "word": "mango",
+      "hint": "A tropical fruit"
+    },
+    {
+      "word": "cherry",
+      "hint": "Small red fruit"
+    },
+    {
+      "word": "grapes",
+      "hint": "Fruit used to make wine"
+    },
+    {
+      "word": "honey",
+      "hint": "Bees make this"
+    },
+    {
+      "word": "orange",
+      "hint": "A citrus fruit"
+    },
+    {
+      "word": "pepper",
+      "hint": "A spicy seasoning"
+    },
+    {
+      "word": "waffle",
+      "hint": "Breakfast food with squares"
+    },
+    {
+      "word": "butter",
+      "hint": "Spread on toast"
+    },
+    {
+      "word": "walnut",
+      "hint": "A type of nut"
+    },
+    {
+      "word": "yogurt",
+      "hint": "A dairy snack"
+    },
+    {
+      "word": "dinner",
+      "hint": "Evening meal"
+    },
+    {
+      "word": "cookie",
+      "hint": "Sweet baked treat"
+    },
+    {
+      "word": "pastry",
+      "hint": "Flaky bakery item"
+    },
+    {
+      "word": "garlic",
+      "hint": "Strong smelling seasoning"
+    },
+    {
+      "word": "turnip",
+      "hint": "Root vegetable"
+    },
+    {
+      "word": "celery",
+      "hint": "Crunchy green stalk"
+    },
+    {
+      "word": "ginger",
+      "hint": "Spicy root"
+    },
+    {
+      "word": "pretzel",
+      "hint": "Twisted salty snack"
+    }
+  ],
+  "objects": [
+    {
+      "word": "guitar",
+      "hint": "A musical instrument"
+    },
+    {
+      "word": "bridge",
+      "hint": "Connects two sides"
+    },
+    {
+      "word": "camera",
+      "hint": "Takes photos"
+    },
+    {
+      "word": "hammer",
+      "hint": "A tool to hit nails"
+    },
+    {
+      "word": "mirror",
+      "hint": "Shows your reflection"
+    },
+    {
+      "word": "pencil",
+      "hint": "Write with it"
+    },
+    {
+      "word": "candle",
+      "hint": "Provides light with flame"
+    },
+    {
+      "word": "marble",
+      "hint": "Small glass sphere"
+    },
+    {
+      "word": "anchor",
+      "hint": "Keeps a ship in place"
+    },
+    {
+      "word": "basket",
+      "hint": "Carry things in it"
+    },
+    {
+      "word": "jacket",
+      "hint": "Wear it when cold"
+    },
+    {
+      "word": "ladder",
+      "hint": "Climb up with it"
+    },
+    {
+      "word": "napkin",
+      "hint": "Wipe your mouth"
+    },
+    {
+      "word": "ticket",
+      "hint": "Need it to enter"
+    },
+    {
+      "word": "vacuum",
+      "hint": "Cleans the floor"
+    },
+    {
+      "word": "helmet",
+      "hint": "Protects your head"
+    },
+    {
+      "word": "needle",
+      "hint": "Used for sewing"
+    },
+    {
+      "word": "wrench",
+      "hint": "A tool for bolts"
+    },
+    {
+      "word": "lantern",
+      "hint": "Portable light"
+    },
+    {
+      "word": "locket",
+      "hint": "Necklace with a photo"
+    },
+    {
+      "word": "magnet",
+      "hint": "Attracts metal"
+    },
+    {
+      "word": "violin",
+      "hint": "Stringed instrument"
+    },
+    {
+      "word": "paddle",
+      "hint": "Row a boat with it"
+    },
+    {
+      "word": "trophy",
+      "hint": "A winner prize"
+    },
+    {
+      "word": "umbrella",
+      "hint": "Rain protection"
+    },
+    {
+      "word": "gloves",
+      "hint": "Wear on your hands"
+    },
+    {
+      "word": "saddle",
+      "hint": "Sit on a horse"
+    },
+    {
+      "word": "sketch",
+      "hint": "A quick drawing"
+    },
+    {
+      "word": "domino",
+      "hint": "Spotted game tile"
+    },
+    {
+      "word": "igloo",
+      "hint": "Ice house"
+    }
+  ],
+  "fantasy": [
+    {
+      "word": "dragon",
+      "hint": "A mythical creature"
+    },
+    {
+      "word": "knight",
+      "hint": "Medieval warrior"
+    },
+    {
+      "word": "zombie",
+      "hint": "Undead creature"
+    },
+    {
+      "word": "wizard",
+      "hint": "Magical person"
+    },
+    {
+      "word": "pirate",
+      "hint": "Sails the seven seas"
+    },
+    {
+      "word": "castle",
+      "hint": "A royal building"
+    },
+    {
+      "word": "throne",
+      "hint": "A king sits on it"
+    },
+    {
+      "word": "shield",
+      "hint": "Protection from attacks"
+    },
+    {
+      "word": "dagger",
+      "hint": "A short blade"
+    },
+    {
+      "word": "dungeon",
+      "hint": "Underground prison"
+    },
+    {
+      "word": "potion",
+      "hint": "Magical drink"
+    },
+    {
+      "word": "trident",
+      "hint": "Three-pronged weapon"
+    },
+    {
+      "word": "venom",
+      "hint": "A snake poison"
+    },
+    {
+      "word": "sphinx",
+      "hint": "Egyptian mythical statue"
+    },
+    {
+      "word": "quiver",
+      "hint": "Holds arrows"
+    },
+    {
+      "word": "riddle",
+      "hint": "A tricky question"
+    },
+    {
+      "word": "queen",
+      "hint": "Female ruler"
+    },
+    {
+      "word": "shadow",
+      "hint": "Dark area behind you"
+    },
+    {
+      "word": "silver",
+      "hint": "A shiny metal"
+    },
+    {
+      "word": "temple",
+      "hint": "A place of worship"
+    },
+    {
+      "word": "velvet",
+      "hint": "A soft fabric"
+    },
+    {
+      "word": "ivory",
+      "hint": "Color of elephant tusks"
+    },
+    {
+      "word": "puzzle",
+      "hint": "Solve it piece by piece"
+    },
+    {
+      "word": "robot",
+      "hint": "A machine that moves"
+    },
+    {
+      "word": "rocket",
+      "hint": "Goes to space"
+    }
+  ]
+}
