@@ -376,5 +376,44 @@
       "First player to reach the target score wins!"
     ],
     "tips": "As storyteller, be subtle — too obvious and everyone guesses right (0 points). Too obscure and no one gets it!"
+  },
+  "knowme": {
+    "name": "How Well Do You Know Me?",
+    "icon": "💕",
+    "players": "2",
+    "summary": "Answer questions about each other and see how well you match!",
+    "rules": [
+      "Both players receive the same question each round",
+      "Each player types their answer independently within the time limit",
+      "After both answer, the responses are revealed side by side",
+      "If your answers match (similar wording counts), you both earn 500 points!",
+      "At the end, you get a compatibility percentage based on how many you matched"
+    ],
+    "tips": "Think about what your partner would say, not just what you think! The more you know each other, the higher your score."
+  },
+  "connectfour": {
+    "name": "Connect Four",
+    "icon": "🔴",
+    "players": "2",
+    "summary": "Drop discs into the grid and be the first to connect four in a row!",
+    "rules": [
+      "Players take turns dropping colored discs (🔴 or 🟡) into a 7-column, 6-row grid",
+      "Discs fall to the lowest available position in the chosen column",
+      "First player to connect 4 discs in a row — horizontally, vertically, or diagonally — wins!",
+      "If the board fills up with no winner, it's a draw"
+    ],
+    "tips": "Control the center column! It gives you the most options for connecting four."
+  },
+  "tictactoe": {
+    "name": "Tic Tac Toe",
+    "icon": "❌",
+    "players": "2",
+    "summary": "Classic X's and O's — get three in a row to win!",
+    "rules": [
+      "Players take turns placing their mark (❌ or ⭕) on a 3×3 grid",
+      "First player to get 3 marks in a row — horizontally, vertically, or diagonally — wins!",
+      "If all 9 cells are filled with no winner, it's a draw"
+    ],
+    "tips": "Always take the center if it's free. Corner openings give you the best chance to set up a fork!"
   }
 }

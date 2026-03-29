@@ -28,6 +28,9 @@ const rummyLogic = require('./game-logic/rummy');
 const coupLogic = require('./game-logic/coup');
 const wordleLogic = require('./game-logic/wordle');
 const dixitLogic = require('./game-logic/dixit');
+const knowmeLogic = require('./game-logic/knowme');
+const connectFourLogic = require('./game-logic/connectfour');
+const ticTacToeLogic = require('./game-logic/tictactoe');
 
 const app = express();
 const server = http.createServer(app);
@@ -483,7 +486,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.hostId !== socket.id) return;
 
-    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit'];
+    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe'];
     if (!validGames.includes(gameType)) return;
 
     // Sanitize category
@@ -505,7 +508,7 @@ io.on('connection', (socket) => {
     room.lastGame = { gameType, category: cat, settings: s };
 
     // Handle max player limits — auto-spectate excess players
-    const maxPlayers = { chess: 2, battleship: 2, rummy: 6, coup: 6, dixit: 8, codenames: 20, ludo: 4, poker: 8 };
+    const maxPlayers = { chess: 2, battleship: 2, rummy: 6, coup: 6, dixit: 8, codenames: 20, ludo: 4, poker: 8, knowme: 2, connectfour: 2, tictactoe: 2 };
     const maxP = maxPlayers[gameType];
     if (maxP) {
       const activePlayers = room.players.filter(p => !p.isSpectator);
@@ -551,6 +554,9 @@ io.on('connection', (socket) => {
     else if (gameType === 'coup') coupLogic.init(room);
     else if (gameType === 'wordle') wordleLogic.init(room, s);
     else if (gameType === 'dixit') dixitLogic.init(room, s);
+    else if (gameType === 'knowme') knowmeLogic.init(room, s);
+    else if (gameType === 'connectfour') connectFourLogic.init(room);
+    else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
@@ -558,7 +564,7 @@ io.on('connection', (socket) => {
       room.status = 'lobby';
       room.lastGame = null;
       gameStartTimes.delete(room.code);
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -751,6 +757,29 @@ io.on('connection', (socket) => {
         return;
       }
 
+      // Know Me: round-based broadcast
+      if (gameType === 'knowme') {
+        data = knowmeLogic.getCurrentQuestion(room);
+      }
+
+      // Connect Four: send per-player view
+      if (gameType === 'connectfour') {
+        room.players.forEach(p => {
+          const view = connectFourLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('connectfour-state', view);
+        });
+        return;
+      }
+
+      // Tic Tac Toe: send per-player view
+      if (gameType === 'tictactoe') {
+        room.players.forEach(p => {
+          const view = ticTacToeLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('tictactoe-state', view);
+        });
+        return;
+      }
+
       // Would You Rather uses standard game-state
       if (gameType === 'wouldyourather') {
         data = wouldYouRatherLogic.getCurrentQuestion(room);
@@ -790,6 +819,8 @@ io.on('connection', (socket) => {
       result = emojiLogic.handleAnswer(room, socket.id, answer);
     } else if (room.currentGame === 'wouldyourather') {
       result = wouldYouRatherLogic.handleAnswer(room, socket.id, answer);
+    } else if (room.currentGame === 'knowme') {
+      result = knowmeLogic.handleAnswer(room, socket.id, answer);
     } else if (room.currentGame === 'drawguess') {
       result = drawGuessLogic.handleGuess(room, socket.id, answer);
       if (result) {
@@ -831,6 +862,7 @@ io.on('connection', (socket) => {
     else if (game === 'emoji') logic = emojiLogic;
     else if (game === 'drawguess') logic = drawGuessLogic;
     else if (game === 'wouldyourather') logic = wouldYouRatherLogic;
+    else if (game === 'knowme') logic = knowmeLogic;
     if (!logic) return;
 
     const hasNext = logic.nextRound(room);
@@ -841,6 +873,7 @@ io.on('connection', (socket) => {
       else if (game === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
       else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
+      else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
       else if (game === 'drawguess') {
         // Draw & Guess: next turn starts with word choices
         const choiceData = drawGuessLogic.getWordChoices(room);
@@ -880,6 +913,7 @@ io.on('connection', (socket) => {
     else if (game === 'emoji') roundData = emojiLogic.getRoundResults(room);
     else if (game === 'drawguess') roundData = drawGuessLogic.getRoundResults(room);
     else if (game === 'wouldyourather') roundData = wouldYouRatherLogic.getRoundResults(room);
+    else if (game === 'knowme') roundData = knowmeLogic.getRoundResults(room);
 
     if (roundData) io.to(room.code).emit('round-result', roundData);
   });
@@ -918,6 +952,9 @@ io.on('connection', (socket) => {
     else if (game === 'coup') logic = coupLogic;
     else if (game === 'wordle') logic = wordleLogic;
     else if (game === 'dixit') logic = dixitLogic;
+    else if (game === 'knowme') logic = knowmeLogic;
+    else if (game === 'connectfour') logic = connectFourLogic;
+    else if (game === 'tictactoe') logic = ticTacToeLogic;
 
     if (logic) {
       const results = logic.getResults(room);
@@ -974,12 +1011,15 @@ io.on('connection', (socket) => {
     else if (gameType === 'coup') coupLogic.init(room);
     else if (gameType === 'wordle') wordleLogic.init(room, settings);
     else if (gameType === 'dixit') dixitLogic.init(room, settings);
+    else if (gameType === 'knowme') knowmeLogic.init(room, settings);
+    else if (gameType === 'connectfour') connectFourLogic.init(room);
+    else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
       room.currentGame = null;
       room.status = 'lobby';
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -1128,6 +1168,23 @@ io.on('connection', (socket) => {
         room.players.forEach(p => {
           const view = dixitLogic.getPlayerView(room, p.id);
           if (view) io.to(p.id).emit('dixit-state', view);
+        });
+        return;
+      }
+      if (gameType === 'knowme') {
+        data = knowmeLogic.getCurrentQuestion(room);
+      }
+      if (gameType === 'connectfour') {
+        room.players.forEach(p => {
+          const view = connectFourLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('connectfour-state', view);
+        });
+        return;
+      }
+      if (gameType === 'tictactoe') {
+        room.players.forEach(p => {
+          const view = ticTacToeLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('tictactoe-state', view);
         });
         return;
       }
@@ -1880,6 +1937,44 @@ io.on('connection', (socket) => {
     });
     if (result.gameOver) {
       const results = battleshipLogic.getResults(room);
+      recordGameResults(room);
+      io.to(room.code).emit('game-over', results);
+      room.status = 'lobby';
+      room.currentGame = null;
+    }
+  });
+
+  // ─── CONNECT FOUR EVENTS ───
+  socket.on('connectfour-move', ({ col }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'connectfour') return;
+    const result = connectFourLogic.dropDisc(room, socket.id, col);
+    if (!result) return;
+    room.players.forEach(p => {
+      const view = connectFourLogic.getPlayerView(room, p.id);
+      if (view) io.to(p.id).emit('connectfour-update', view);
+    });
+    if (result.action === 'win' || result.action === 'draw') {
+      const results = connectFourLogic.getResults(room);
+      recordGameResults(room);
+      io.to(room.code).emit('game-over', results);
+      room.status = 'lobby';
+      room.currentGame = null;
+    }
+  });
+
+  // ─── TIC TAC TOE EVENTS ───
+  socket.on('tictactoe-move', ({ row, col }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'tictactoe') return;
+    const result = ticTacToeLogic.makeMove(room, socket.id, row, col);
+    if (!result) return;
+    room.players.forEach(p => {
+      const view = ticTacToeLogic.getPlayerView(room, p.id);
+      if (view) io.to(p.id).emit('tictactoe-update', view);
+    });
+    if (result.action === 'win' || result.action === 'draw') {
+      const results = ticTacToeLogic.getResults(room);
       recordGameResults(room);
       io.to(room.code).emit('game-over', results);
       room.status = 'lobby';

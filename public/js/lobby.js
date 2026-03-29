@@ -139,7 +139,7 @@ function renderPlayers(players) {
 
 // ─── GAME SELECTION (HOST) ───
 const gamesWithCategories = ['trivia', 'wordscramble', 'emoji', 'hangman', 'imposter'];
-const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter'];
+const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme'];
 const defaultSettings = {
   trivia:       { rounds: 10, timeLimit: 15, timeLabel: 'sec/question' },
   wordscramble: { rounds: 10, timeLimit: 20, timeLabel: 'sec/word' },
@@ -152,7 +152,8 @@ const defaultSettings = {
   justone:      { rounds: 8,  timeLimit: 30, timeLabel: 'sec/phase' },
   wouldyourather: { rounds: 10, timeLimit: 20, timeLabel: 'sec/question' },
   wordchain:    { rounds: 0,  timeLimit: 10, timeLabel: 'sec/turn', noRounds: true },
-  imposter:     { rounds: 3,  timeLimit: 30, timeLabel: 'sec/describe', votingRounds: 2 }
+  imposter:     { rounds: 3,  timeLimit: 30, timeLabel: 'sec/describe', votingRounds: 2 },
+  knowme:       { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' }
 };
 let pendingGameType = null;
 let pendingCategory = 'all';
@@ -463,7 +464,10 @@ socket.on('join-as-spectator', ({ roomCode: code, gameType }) => {
     rummy:        { icon: '🃏', label: 'Rummy',          script: '/js/games/rummy.js' },
     coup:         { icon: '👑', label: 'Coup',           script: '/js/games/coup.js' },
     wordle:       { icon: '📝', label: 'Wordle',         script: '/js/games/wordle.js' },
-    dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' }
+    dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' },
+    knowme:       { icon: '💕', label: 'Know Me',         script: '/js/games/knowme.js' },
+    connectfour:  { icon: '🔴', label: 'Connect Four',    script: '/js/games/connectfour.js' },
+    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' }
   };
 
   const config = gameConfig[gameType];
@@ -545,7 +549,10 @@ socket.on('game-starting', ({ gameType }) => {
     rummy:        { icon: '🃏', label: 'Rummy',          script: '/js/games/rummy.js' },
     coup:         { icon: '👑', label: 'Coup',           script: '/js/games/coup.js' },
     wordle:       { icon: '📝', label: 'Wordle',         script: '/js/games/wordle.js' },
-    dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' }
+    dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' },
+    knowme:       { icon: '💕', label: 'Know Me',         script: '/js/games/knowme.js' },
+    connectfour:  { icon: '🔴', label: 'Connect Four',    script: '/js/games/connectfour.js' },
+    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' }
   };
 
   const config = gameConfig[gameType];
@@ -846,7 +853,10 @@ function resetGameClientState() {
     'imposter-state', 'ludo-state', 'ludo-update', 'poker-state', 'poker-update',
     'chess-state', 'chess-update', 'battleship-state', 'battleship-update',
     'rummy-state', 'rummy-update', 'coup-state', 'coup-update',
-    'wordle-state', 'wordle-update', 'dixit-state', 'dixit-update'
+    'wordle-state', 'wordle-update', 'dixit-state', 'dixit-update',
+    'knowme-state', 'knowme-update',
+    'connectfour-state', 'connectfour-update',
+    'tictactoe-state', 'tictactoe-update'
   ];
 
   gameEvents.forEach(eventName => socket.off(eventName));
