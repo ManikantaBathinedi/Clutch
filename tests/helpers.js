@@ -42,6 +42,20 @@ function startServer() {
     const imposterLogic = require('../game-logic/imposter');
     const ludoLogic = require('../game-logic/ludo');
     const pokerLogic = require('../game-logic/poker');
+    const chessLogic = require('../game-logic/chess');
+    const battleshipLogic = require('../game-logic/battleship');
+    const rummyLogic = require('../game-logic/rummy');
+    const coupLogic = require('../game-logic/coup');
+    const wordleLogic = require('../game-logic/wordle');
+    const dixitLogic = require('../game-logic/dixit');
+    const knowmeLogic = require('../game-logic/knowme');
+    const connectFourLogic = require('../game-logic/connectfour');
+    const ticTacToeLogic = require('../game-logic/tictactoe');
+    const partyPromptsLogic = require('../game-logic/partyprompts');
+    const kingsCupLogic = require('../game-logic/kingscup');
+    const mostLikelyToLogic = require('../game-logic/mostlikelyto');
+    const neverHaveIEverLogic = require('../game-logic/neverhaveiever');
+    const truthOrDrinkLogic = require('../game-logic/truthordrink');
 
     const rooms = new Map();
 
@@ -151,7 +165,7 @@ function startServer() {
       socket.on('select-game', ({ gameType, category, settings }) => {
         const room = rooms.get(socket.roomCode);
         if (!room || room.hostId !== socket.id) return;
-        const validGames = ['trivia','wordscramble','speedmath','emoji','drawguess','codenames','colorclash','blackjack','hangman','memorymatch','spyfall','wavelength','justone','wouldyourather','wordchain','imposter','ludo','poker'];
+        const validGames = ['trivia','wordscramble','speedmath','emoji','drawguess','codenames','colorclash','blackjack','hangman','memorymatch','spyfall','wavelength','justone','wouldyourather','wordchain','imposter','ludo','poker','chess','battleship','rummy','coup','wordle','dixit','knowme','connectfour','tictactoe','partyprompts','kingscup','mostlikelyto','neverhaveiever','truthordrink'];
         if (!validGames.includes(gameType)) return;
         const cat = (typeof category === 'string') ? category.trim().toLowerCase() : 'all';
         const s = {};
@@ -181,6 +195,20 @@ function startServer() {
         else if (gameType === 'imposter') { s.category = cat; imposterLogic.init(room, s); }
         else if (gameType === 'ludo') ludoLogic.init(room);
         else if (gameType === 'poker') pokerLogic.init(room);
+        else if (gameType === 'chess') chessLogic.init(room);
+        else if (gameType === 'battleship') battleshipLogic.init(room);
+        else if (gameType === 'rummy') rummyLogic.init(room, s);
+        else if (gameType === 'coup') coupLogic.init(room);
+        else if (gameType === 'wordle') wordleLogic.init(room, s);
+        else if (gameType === 'dixit') dixitLogic.init(room, s);
+        else if (gameType === 'knowme') knowmeLogic.init(room, s);
+        else if (gameType === 'connectfour') connectFourLogic.init(room);
+        else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
+        else if (gameType === 'partyprompts') partyPromptsLogic.init(room, s);
+        else if (gameType === 'kingscup') kingsCupLogic.init(room);
+        else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, s);
+        else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, s);
+        else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, s);
 
         io.to(room.code).emit('game-starting', { gameType });
 
@@ -267,6 +295,78 @@ function startServer() {
               if (view) io.to(p.id).emit('poker-state', view);
             });
           }
+          else if (gameType === 'chess') {
+            room.players.forEach(p => {
+              const view = chessLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('chess-state', view);
+            });
+          }
+          else if (gameType === 'battleship') {
+            room.players.forEach(p => {
+              const view = battleshipLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('battleship-state', view);
+            });
+          }
+          else if (gameType === 'rummy') {
+            room.players.forEach(p => {
+              const view = rummyLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('rummy-state', view);
+            });
+          }
+          else if (gameType === 'coup') {
+            room.players.forEach(p => {
+              const view = coupLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('coup-state', view);
+            });
+          }
+          else if (gameType === 'wordle') {
+            room.players.forEach(p => {
+              const view = wordleLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('wordle-state', view);
+            });
+          }
+          else if (gameType === 'dixit') {
+            room.players.forEach(p => {
+              const view = dixitLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('dixit-state', view);
+            });
+          }
+          else if (gameType === 'knowme') {
+            const d = knowmeLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
+          else if (gameType === 'connectfour') {
+            room.players.forEach(p => {
+              const view = connectFourLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('connectfour-state', view);
+            });
+          }
+          else if (gameType === 'tictactoe') {
+            room.players.forEach(p => {
+              const view = ticTacToeLogic.getPlayerView(room, p.id);
+              if (view) io.to(p.id).emit('tictactoe-state', view);
+            });
+          }
+          else if (gameType === 'partyprompts') {
+            const d = partyPromptsLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
+          else if (gameType === 'kingscup') {
+            const d = kingsCupLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
+          else if (gameType === 'mostlikelyto') {
+            const d = mostLikelyToLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
+          else if (gameType === 'neverhaveiever') {
+            const d = neverHaveIEverLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
+          else if (gameType === 'truthordrink') {
+            const d = truthOrDrinkLogic.getCurrentQuestion(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
         }, 100);
       });
 
@@ -281,6 +381,72 @@ function startServer() {
         else if (room.currentGame === 'speedmath') result = speedMathLogic.handleAnswer(room, socket.id, answer);
         else if (room.currentGame === 'emoji') result = emojiLogic.handleAnswer(room, socket.id, answer);
         else if (room.currentGame === 'wouldyourather') result = wouldYouRatherLogic.handleAnswer(room, socket.id, answer);
+        else if (room.currentGame === 'knowme') result = knowmeLogic.handleAnswer(room, socket.id, answer);
+        else if (room.currentGame === 'partyprompts') {
+          result = partyPromptsLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            socket.emit('answer-result', result);
+            const activePlayers = room.players.filter(p => !p.isSpectator);
+            const gs = room.gameState;
+            if (gs && gs.acknowledged && Object.keys(gs.acknowledged).length >= activePlayers.length) {
+              const roundData = partyPromptsLogic.getRoundResults(room);
+              if (roundData) io.to(room.code).emit('round-result', roundData);
+            }
+            return;
+          }
+        }
+        else if (room.currentGame === 'kingscup') {
+          result = kingsCupLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            const state = kingsCupLogic.getCurrentQuestion(room);
+            if (state) io.to(room.code).emit('game-state', state);
+            if (room.gameState && room.gameState.gameOver) {
+              const results = kingsCupLogic.getResults(room);
+              io.to(room.code).emit('game-over', results);
+              room.status = 'lobby'; room.currentGame = null;
+            }
+            return;
+          }
+        }
+        else if (room.currentGame === 'mostlikelyto') {
+          result = mostLikelyToLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            socket.emit('answer-result', result);
+            const activePlayers = room.players.filter(p => !p.isSpectator);
+            const gs = room.gameState;
+            if (gs && gs.votes && Object.keys(gs.votes).length >= activePlayers.length) {
+              const roundData = mostLikelyToLogic.getRoundResults(room);
+              if (roundData) io.to(room.code).emit('round-result', roundData);
+            }
+            return;
+          }
+        }
+        else if (room.currentGame === 'neverhaveiever') {
+          result = neverHaveIEverLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            socket.emit('answer-result', result);
+            const activePlayers = room.players.filter(p => !p.isSpectator);
+            const gs = room.gameState;
+            if (gs && gs.answers && Object.keys(gs.answers).length >= activePlayers.length) {
+              const roundData = neverHaveIEverLogic.getRoundResults(room);
+              if (roundData) io.to(room.code).emit('round-result', roundData);
+            }
+            return;
+          }
+        }
+        else if (room.currentGame === 'truthordrink') {
+          result = truthOrDrinkLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            socket.emit('answer-result', result);
+            const gs = room.gameState;
+            const hotSeatId = gs && gs.playerOrder ? gs.playerOrder[gs.currentRound % gs.playerOrder.length] : null;
+            if (hotSeatId && gs.answers && gs.answers[hotSeatId] !== undefined) {
+              const roundData = truthOrDrinkLogic.getRoundResults(room);
+              if (roundData) io.to(room.code).emit('round-result', roundData);
+            }
+            return;
+          }
+        }
         else if (room.currentGame === 'drawguess') {
           result = drawGuessLogic.handleGuess(room, socket.id, answer);
           if (result) {
@@ -316,6 +482,11 @@ function startServer() {
         else if (game === 'emoji') logic = emojiLogic;
         else if (game === 'drawguess') logic = drawGuessLogic;
         else if (game === 'wouldyourather') logic = wouldYouRatherLogic;
+        else if (game === 'knowme') logic = knowmeLogic;
+        else if (game === 'partyprompts') logic = partyPromptsLogic;
+        else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
+        else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
+        else if (game === 'truthordrink') logic = truthOrDrinkLogic;
         if (!logic) return;
         const hasNext = logic.nextRound(room);
         if (hasNext) {
@@ -325,6 +496,11 @@ function startServer() {
           else if (game === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
           else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
           else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
+          else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
+          else if (game === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
+          else if (game === 'mostlikelyto') data = mostLikelyToLogic.getCurrentQuestion(room);
+          else if (game === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
+          else if (game === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
           else if (game === 'drawguess') {
             const choiceData = drawGuessLogic.getWordChoices(room);
             if (choiceData) {
@@ -355,6 +531,12 @@ function startServer() {
         else if (game === 'emoji') roundData = emojiLogic.getRoundResults(room);
         else if (game === 'drawguess') roundData = drawGuessLogic.getRoundResults(room);
         else if (game === 'wouldyourather') roundData = wouldYouRatherLogic.getRoundResults(room);
+        else if (game === 'knowme') roundData = knowmeLogic.getRoundResults(room);
+        else if (game === 'partyprompts') roundData = partyPromptsLogic.getRoundResults(room);
+        else if (game === 'kingscup') roundData = kingsCupLogic.getRoundResults(room);
+        else if (game === 'mostlikelyto') roundData = mostLikelyToLogic.getRoundResults(room);
+        else if (game === 'neverhaveiever') roundData = neverHaveIEverLogic.getRoundResults(room);
+        else if (game === 'truthordrink') roundData = truthOrDrinkLogic.getRoundResults(room);
         if (roundData) io.to(room.code).emit('round-result', roundData);
       });
 
@@ -382,6 +564,20 @@ function startServer() {
         else if (game === 'imposter') logic = imposterLogic;
         else if (game === 'ludo') logic = ludoLogic;
         else if (game === 'poker') logic = pokerLogic;
+        else if (game === 'chess') logic = chessLogic;
+        else if (game === 'battleship') logic = battleshipLogic;
+        else if (game === 'rummy') logic = rummyLogic;
+        else if (game === 'coup') logic = coupLogic;
+        else if (game === 'wordle') logic = wordleLogic;
+        else if (game === 'dixit') logic = dixitLogic;
+        else if (game === 'knowme') logic = knowmeLogic;
+        else if (game === 'connectfour') logic = connectFourLogic;
+        else if (game === 'tictactoe') logic = ticTacToeLogic;
+        else if (game === 'partyprompts') logic = partyPromptsLogic;
+        else if (game === 'kingscup') logic = kingsCupLogic;
+        else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
+        else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
+        else if (game === 'truthordrink') logic = truthOrDrinkLogic;
         if (logic) {
           const results = logic.getResults(room);
           io.to(room.code).emit('game-over', results);
@@ -413,6 +609,20 @@ function startServer() {
         else if (gameType === 'imposter') { settings.category = category; imposterLogic.init(room, settings); }
         else if (gameType === 'ludo') ludoLogic.init(room);
         else if (gameType === 'poker') pokerLogic.init(room);
+        else if (gameType === 'chess') chessLogic.init(room);
+        else if (gameType === 'battleship') battleshipLogic.init(room);
+        else if (gameType === 'rummy') rummyLogic.init(room, settings);
+        else if (gameType === 'coup') coupLogic.init(room);
+        else if (gameType === 'wordle') wordleLogic.init(room, settings);
+        else if (gameType === 'dixit') dixitLogic.init(room, settings);
+        else if (gameType === 'knowme') knowmeLogic.init(room, settings);
+        else if (gameType === 'connectfour') connectFourLogic.init(room);
+        else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
+        else if (gameType === 'partyprompts') partyPromptsLogic.init(room, settings);
+        else if (gameType === 'kingscup') kingsCupLogic.init(room);
+        else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, settings);
+        else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, settings);
+        else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, settings);
         io.to(room.code).emit('game-starting', { gameType });
       });
 
@@ -1020,6 +1230,389 @@ function startServer() {
         } else {
           io.to(room.code).emit('wordchain-state', wordChainLogic.getCurrentState(room));
         }
+      });
+
+      // Chess
+      socket.on('chess-move', ({ fromR, fromC, toR, toC, promotion }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'chess') return;
+        const result = chessLogic.makeMove(room, socket.id, fromR, fromC, toR, toC, promotion);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = chessLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('chess-update', view);
+        });
+        if (result.gameOver) {
+          const results = chessLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('chess-ai-move', ({ fromR, fromC, toR, toC, promotion }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'chess') return;
+        const gs = room.gameState;
+        if (!gs || !gs.aiMode) return;
+        const aiId = gs.whiteId === socket.id ? gs.blackId : (gs.blackId === socket.id ? gs.whiteId : null);
+        if (!aiId) return;
+        const result = chessLogic.makeMove(room, aiId, fromR, fromC, toR, toC, promotion);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = chessLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('chess-update', view);
+        });
+        if (result.gameOver) {
+          const results = chessLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('chess-resign', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'chess') return;
+        const result = chessLogic.resign(room, socket.id);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = chessLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('chess-update', view);
+        });
+        const results = chessLogic.getResults(room);
+        io.to(room.code).emit('game-over', results);
+        room.status = 'lobby'; room.currentGame = null;
+      });
+      socket.on('chess-draw-offer', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'chess') return;
+        const result = chessLogic.offerDraw(room, socket.id);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = chessLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('chess-update', view);
+        });
+      });
+      socket.on('chess-draw-respond', ({ accept }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'chess') return;
+        const result = chessLogic.respondDraw(room, socket.id, accept);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = chessLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('chess-update', view);
+        });
+        if (result.accepted) {
+          const results = chessLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+
+      // Battleship
+      socket.on('battleship-place', ({ ships }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'battleship') return;
+        const result = battleshipLogic.placeShips(room, socket.id, ships);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = battleshipLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('battleship-update', view);
+        });
+      });
+      socket.on('battleship-auto-place', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'battleship') return;
+        const result = battleshipLogic.autoPlaceShips(room, socket.id);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = battleshipLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('battleship-update', view);
+        });
+      });
+      socket.on('battleship-fire', ({ row, col }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'battleship') return;
+        const result = battleshipLogic.fireShot(room, socket.id, row, col);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = battleshipLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('battleship-update', view);
+        });
+        if (result.gameOver) {
+          const results = battleshipLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+
+      // Connect Four
+      socket.on('connectfour-move', ({ col }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'connectfour') return;
+        const result = connectFourLogic.dropDisc(room, socket.id, col);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = connectFourLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('connectfour-update', view);
+        });
+        if (result.action === 'win' || result.action === 'draw') {
+          const results = connectFourLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+
+      // Tic Tac Toe
+      socket.on('tictactoe-move', ({ row, col }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'tictactoe') return;
+        const result = ticTacToeLogic.makeMove(room, socket.id, row, col);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = ticTacToeLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('tictactoe-update', view);
+        });
+        if (result.action === 'win' || result.action === 'draw') {
+          const results = ticTacToeLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+
+      // Rummy
+      socket.on('rummy-draw-deck', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'rummy') return;
+        const result = rummyLogic.drawFromDeck(room, socket.id);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = rummyLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('rummy-update', view);
+        });
+      });
+      socket.on('rummy-draw-discard', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'rummy') return;
+        const result = rummyLogic.drawFromDiscard(room, socket.id);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = rummyLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('rummy-update', view);
+        });
+      });
+      socket.on('rummy-discard', ({ cardId }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'rummy') return;
+        const result = rummyLogic.discard(room, socket.id, cardId);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = rummyLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('rummy-update', view);
+        });
+        if (result.gameOver) {
+          const results = rummyLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('rummy-lay-meld', ({ cardIds }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'rummy') return;
+        const result = rummyLogic.layMeld(room, socket.id, cardIds);
+        if (!result) {
+          socket.emit('rummy-error', { message: 'Invalid meld!' });
+          return;
+        }
+        room.players.forEach(p => {
+          const view = rummyLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('rummy-update', view);
+        });
+      });
+      socket.on('rummy-lay-off', ({ cardIndex, meldIndex }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'rummy') return;
+        const result = rummyLogic.layOff(room, socket.id, cardIndex, meldIndex);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = rummyLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('rummy-update', view);
+        });
+      });
+
+      // Coup
+      socket.on('coup-action', ({ action, targetId }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.takeAction(room, socket.id, action, targetId);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('coup-challenge', ({ challenge }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.respondChallenge(room, socket.id, challenge);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('coup-counter', ({ counter, claimedRole }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.respondCounter(room, socket.id, counter, claimedRole);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('coup-counter-challenge', ({ challenge }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.respondCounterChallenge(room, socket.id, challenge);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('coup-lose-card', ({ cardIndex }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.loseCard(room, socket.id, cardIndex);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('coup-exchange', ({ keptCards }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'coup') return;
+        const result = coupLogic.exchangeCards(room, socket.id, keptCards);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = coupLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('coup-update', view);
+        });
+        if (result.gameOver) {
+          const results = coupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+
+      // Wordle
+      socket.on('wordle-guess', ({ guess }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'wordle') return;
+        const result = wordleLogic.submitGuess(room, socket.id, guess);
+        if (!result) return;
+        if (result.error) {
+          socket.emit('wordle-error', { message: result.error });
+          return;
+        }
+        room.players.forEach(p => {
+          const view = wordleLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('wordle-update', view);
+        });
+        if (result.allDone) {
+          const gs = room.gameState;
+          if (gs.phase === 'finished') {
+            const results = wordleLogic.getResults(room);
+            io.to(room.code).emit('game-over', results);
+            room.status = 'lobby'; room.currentGame = null;
+          }
+        }
+      });
+      socket.on('wordle-next', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'wordle' || room.hostId !== socket.id) return;
+        const hasNext = wordleLogic.nextRound(room);
+        if (!hasNext) {
+          const results = wordleLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+          return;
+        }
+        room.players.forEach(p => {
+          const view = wordleLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('wordle-update', view);
+        });
+      });
+
+      // Dixit
+      socket.on('dixit-submit-clue', ({ clue, cardIndex }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'dixit') return;
+        const result = dixitLogic.submitClue(room, socket.id, clue, cardIndex);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = dixitLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('dixit-update', view);
+        });
+      });
+      socket.on('dixit-play-card', ({ cardIndex }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'dixit') return;
+        const result = dixitLogic.playCard(room, socket.id, cardIndex);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = dixitLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('dixit-update', view);
+        });
+      });
+      socket.on('dixit-vote', ({ cardIndex }) => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'dixit') return;
+        const result = dixitLogic.vote(room, socket.id, cardIndex);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = dixitLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('dixit-update', view);
+        });
+        if (result.allVoted && room.gameState && room.gameState.phase === 'finished') {
+          const results = dixitLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby'; room.currentGame = null;
+        }
+      });
+      socket.on('dixit-next-round', () => {
+        const room = rooms.get(socket.roomCode);
+        if (!room || room.currentGame !== 'dixit' || room.hostId !== socket.id) return;
+        const result = dixitLogic.nextRound(room);
+        if (!result) return;
+        room.players.forEach(p => {
+          const view = dixitLogic.getPlayerView(room, p.id);
+          if (view) io.to(p.id).emit('dixit-update', view);
+        });
       });
 
       // Reactions
