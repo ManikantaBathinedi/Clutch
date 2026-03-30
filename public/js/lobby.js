@@ -1,7 +1,7 @@
 const socket = io({ transports: ['websocket', 'polling'] });
 
 // Session data
-const roomCode = sessionStorage.getItem('roomCode');
+let roomCode = sessionStorage.getItem('roomCode');
 const playerName = sessionStorage.getItem('playerName');
 const playerAvatar = sessionStorage.getItem('playerAvatar') || '😎';
 const isHost = sessionStorage.getItem('isHost') === 'true';
@@ -139,7 +139,7 @@ function renderPlayers(players) {
 
 // ─── GAME SELECTION (HOST) ───
 const gamesWithCategories = ['trivia', 'wordscramble', 'emoji', 'hangman', 'imposter'];
-const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme'];
+const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme', 'partyprompts', 'mostlikelyto', 'neverhaveiever', 'truthordrink'];
 const defaultSettings = {
   trivia:       { rounds: 10, timeLimit: 15, timeLabel: 'sec/question' },
   wordscramble: { rounds: 10, timeLimit: 20, timeLabel: 'sec/word' },
@@ -153,7 +153,11 @@ const defaultSettings = {
   wouldyourather: { rounds: 10, timeLimit: 20, timeLabel: 'sec/question' },
   wordchain:    { rounds: 0,  timeLimit: 10, timeLabel: 'sec/turn', noRounds: true },
   imposter:     { rounds: 3,  timeLimit: 30, timeLabel: 'sec/describe', votingRounds: 2 },
-  knowme:       { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' }
+  knowme:       { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' },
+  partyprompts: { rounds: 15, timeLimit: 10, timeLabel: 'sec/prompt' },
+  mostlikelyto: { rounds: 10, timeLimit: 20, timeLabel: 'sec/question' },
+  neverhaveiever: { rounds: 10, timeLimit: 15, timeLabel: 'sec/statement' },
+  truthordrink: { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' }
 };
 let pendingGameType = null;
 let pendingCategory = 'all';
@@ -182,12 +186,16 @@ function handleGameCardClick(e) {
 }
 
 gameGrid.addEventListener('click', handleGameCardClick);
+const gameGridCreative = document.getElementById('game-grid-creative');
+if (gameGridCreative) gameGridCreative.addEventListener('click', handleGameCardClick);
+const gameGridBluff = document.getElementById('game-grid-bluff');
+if (gameGridBluff) gameGridBluff.addEventListener('click', handleGameCardClick);
 const gameGridCards = document.getElementById('game-grid-cards');
 if (gameGridCards) gameGridCards.addEventListener('click', handleGameCardClick);
-const gameGridSocial = document.getElementById('game-grid-social');
-if (gameGridSocial) gameGridSocial.addEventListener('click', handleGameCardClick);
 const gameGridBoard = document.getElementById('game-grid-board');
 if (gameGridBoard) gameGridBoard.addEventListener('click', handleGameCardClick);
+const gameGridDrinking = document.getElementById('game-grid-drinking');
+if (gameGridDrinking) gameGridDrinking.addEventListener('click', handleGameCardClick);
 
 // ─── GAME RULES / HELP SYSTEM ───
 (() => {
@@ -397,6 +405,7 @@ function showSettingsModal(gameType) {
 // Room events handled — update comes from server
 socket.on('room-created', ({ roomCode: newCode }) => {
   // Host reconnected, update room code if changed
+  roomCode = newCode;
   roomCodeText.textContent = newCode;
   sessionStorage.setItem('roomCode', newCode);
 });
@@ -438,6 +447,7 @@ socket.on('join-error', ({ message }) => {
 // ─── SPECTATOR JOIN ───
 socket.on('join-as-spectator', ({ roomCode: code, gameType }) => {
   isSpectator = true;
+  roomCode = code;
   sessionStorage.setItem('roomCode', code);
 
   const gameConfig = {
@@ -467,7 +477,12 @@ socket.on('join-as-spectator', ({ roomCode: code, gameType }) => {
     dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' },
     knowme:       { icon: '💕', label: 'Know Me',         script: '/js/games/knowme.js' },
     connectfour:  { icon: '🔴', label: 'Connect Four',    script: '/js/games/connectfour.js' },
-    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' }
+    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' },
+    partyprompts: { icon: '🎉', label: 'Piloco',    script: '/js/games/partyprompts.js' },
+    kingscup:     { icon: '👑', label: "King's Cup",      script: '/js/games/kingscup.js' },
+    mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
+    neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
+    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' }
   };
 
   const config = gameConfig[gameType];
@@ -552,7 +567,12 @@ socket.on('game-starting', ({ gameType }) => {
     dixit:        { icon: '📖', label: 'Dixit',          script: '/js/games/dixit.js' },
     knowme:       { icon: '💕', label: 'Know Me',         script: '/js/games/knowme.js' },
     connectfour:  { icon: '🔴', label: 'Connect Four',    script: '/js/games/connectfour.js' },
-    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' }
+    tictactoe:    { icon: '❌', label: 'Tic Tac Toe',     script: '/js/games/tictactoe.js' },
+    partyprompts: { icon: '🎉', label: 'Piloco',    script: '/js/games/partyprompts.js' },
+    kingscup:     { icon: '👑', label: "King's Cup",      script: '/js/games/kingscup.js' },
+    mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
+    neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
+    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' }
   };
 
   const config = gameConfig[gameType];
@@ -853,10 +873,12 @@ function resetGameClientState() {
     'imposter-state', 'ludo-state', 'ludo-update', 'poker-state', 'poker-update',
     'chess-state', 'chess-update', 'battleship-state', 'battleship-update',
     'rummy-state', 'rummy-update', 'coup-state', 'coup-update',
-    'wordle-state', 'wordle-update', 'dixit-state', 'dixit-update',
+    'wordle-state', 'wordle-update', 'wordle-error', 'dixit-state', 'dixit-update',
     'knowme-state', 'knowme-update',
     'connectfour-state', 'connectfour-update',
-    'tictactoe-state', 'tictactoe-update'
+    'tictactoe-state', 'tictactoe-update',
+    'partyprompts-state', 'kingscup-state',
+    'mostlikelyto-state', 'neverhaveiever-state', 'truthordrink-state'
   ];
 
   gameEvents.forEach(eventName => socket.off(eventName));

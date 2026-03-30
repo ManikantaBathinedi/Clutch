@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -75,7 +75,7 @@
           <div class="room-status-card" id="room-status-card">
             <div class="room-status-row">
               <span class="status-label">Status</span>
-              <span class="status-value status-live" id="room-status-text">● In Lobby</span>
+              <span class="status-value status-live" id="room-status-text">â— In Lobby</span>
             </div>
             <div class="room-status-row">
               <span class="status-label">Games Played</span>
@@ -89,163 +89,193 @@
       <div class="card mt-16" id="game-select-card">
         <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
           Choose a Game
-          <button class="btn-link primary" id="tournament-btn" title="Create a tournament">🏆 Tournament</button>
+          <button class="btn-link primary" id="tournament-btn" title="Create a tournament">ðŸ† Tournament</button>
         </div>
 
-        <div class="game-section-label">🎉 Party Games</div>
+        <div class="game-section-label">&#x1F9E0; Brain & Words</div>
         <div class="game-grid" id="game-grid">
           <div class="game-card" data-game="trivia">
-            <span class="game-icon">🧠</span>
+            <span class="game-icon">&#x1F9E0;</span>
             <div class="game-name">Trivia</div>
             <div class="game-desc">Answer fast, score big</div>
           </div>
           <div class="game-card" data-game="wordscramble">
-            <span class="game-icon">🔤</span>
+            <span class="game-icon">&#x1F524;</span>
             <div class="game-name">Word Scramble</div>
             <div class="game-desc">Unscramble the letters</div>
           </div>
           <div class="game-card" data-game="speedmath">
-            <span class="game-icon">⚡</span>
+            <span class="game-icon">&#x26A1;</span>
             <div class="game-name">Speed Math</div>
             <div class="game-desc">Solve equations fast</div>
           </div>
           <div class="game-card" data-game="emoji">
-            <span class="game-icon">😎</span>
+            <span class="game-icon">&#x1F60E;</span>
             <div class="game-name">Emoji Decoder</div>
             <div class="game-desc">Guess from emojis</div>
           </div>
-          <div class="game-card" data-game="drawguess">
-            <span class="game-icon">🎨</span>
-            <div class="game-name">Draw & Guess</div>
-            <div class="game-desc">Draw it, guess it</div>
-          </div>
-          <div class="game-card" data-game="codenames">
-            <span class="game-icon">🕵️</span>
-            <div class="game-name">Codenames</div>
-            <div class="game-desc">Spy word guessing</div>
-          </div>
           <div class="game-card" data-game="hangman">
-            <span class="game-icon">💀</span>
+            <span class="game-icon">&#x1F480;</span>
             <div class="game-name">Hangman</div>
             <div class="game-desc">Guess the word, letter by letter</div>
           </div>
-          <div class="game-card" data-game="memorymatch">
-            <span class="game-icon">🧠</span>
-            <div class="game-name">Memory Match</div>
-            <div class="game-desc">Flip cards, find pairs</div>
-          </div>
           <div class="game-card" data-game="wordle">
-            <span class="game-icon">📝</span>
+            <span class="game-icon">&#x1F4DD;</span>
             <div class="game-name">Wordle</div>
             <div class="game-desc">Guess the 5-letter word</div>
           </div>
+          <div class="game-card" data-game="wordchain">
+            <span class="game-icon">&#x1F517;</span>
+            <div class="game-name">Word Chain</div>
+            <div class="game-desc">Chain words, don't get eliminated</div>
+          </div>
+          <div class="game-card" data-game="memorymatch">
+            <span class="game-icon">&#x1F0CF;</span>
+            <div class="game-name">Memory Match</div>
+            <div class="game-desc">Flip cards, find pairs</div>
+          </div>
         </div>
 
+        <div class="game-section-label" style="margin-top: 18px;">&#x1F3A8; Creative</div>
+        <div class="game-grid" id="game-grid-creative">
+          <div class="game-card" data-game="drawguess">
+            <span class="game-icon">&#x1F3A8;</span>
+            <div class="game-name">Draw & Guess</div>
+            <div class="game-desc">Draw it, guess it</div>
+          </div>
+          <div class="game-card" data-game="dixit">
+            <span class="game-icon">&#x1F4D6;</span>
+            <div class="game-name">Dixit</div>
+            <div class="game-desc">Storytelling & creative guessing</div>
+          </div>
+          <div class="game-card" data-game="wavelength">
+            <span class="game-icon">&#x1F4E1;</span>
+            <div class="game-name">Wavelength</div>
+            <div class="game-desc">Guess where on the spectrum</div>
+          </div>
+          <div class="game-card" data-game="justone">
+            <span class="game-icon">&#x261D;&#xFE0F;</span>
+            <div class="game-name">Just One</div>
+            <div class="game-desc">Co-op word guessing</div>
+          </div>
+        </div>
 
-        <div class="game-section-label" style="margin-top: 18px;">�🃏 Card & Casino</div>
+        <div class="game-section-label" style="margin-top: 18px;">&#x1F575;&#xFE0F; Bluff & Deduction</div>
+        <div class="game-grid" id="game-grid-bluff">
+          <div class="game-card" data-game="codenames">
+            <span class="game-icon">&#x1F575;&#xFE0F;</span>
+            <div class="game-name">Codenames</div>
+            <div class="game-desc">Spy word guessing</div>
+          </div>
+          <div class="game-card" data-game="spyfall">
+            <span class="game-icon">&#x1F575;&#xFE0F;&#x200D;&#x2642;&#xFE0F;</span>
+            <div class="game-name">Spyfall</div>
+            <div class="game-desc">Find the spy among you</div>
+          </div>
+          <div class="game-card" data-game="imposter">
+            <span class="game-icon">&#x1F92B;</span>
+            <div class="game-name">Imposter</div>
+            <div class="game-desc">Find the fake among you</div>
+          </div>
+          <div class="game-card" data-game="coup">
+            <span class="game-icon">&#x1F451;</span>
+            <div class="game-name">Coup</div>
+            <div class="game-desc">Bluff, steal & overthrow</div>
+          </div>
+        </div>
+
+        <div class="game-section-label" style="margin-top: 18px;">&#x1F0CF; Card & Casino</div>
         <div class="game-grid" id="game-grid-cards">
           <div class="game-card" data-game="colorclash">
-            <span class="game-icon">🎴</span>
+            <span class="game-icon">&#x1F3B4;</span>
             <div class="game-name">Color Clash</div>
             <div class="game-desc">Play your cards, call UNO!</div>
           </div>
           <div class="game-card" data-game="blackjack">
-            <span class="game-icon">🂡</span>
+            <span class="game-icon">&#x1F0A1;</span>
             <div class="game-name">Blackjack</div>
             <div class="game-desc">Beat the dealer to 21</div>
           </div>
           <div class="game-card" data-game="poker">
-            <span class="game-icon">🂪</span>
+            <span class="game-icon">&#x1F0AA;</span>
             <div class="game-name">Poker</div>
             <div class="game-desc">Texas Hold'em with chips!</div>
           </div>
           <div class="game-card" data-game="rummy">
-            <span class="game-icon">🃏</span>
+            <span class="game-icon">&#x1F0CF;</span>
             <div class="game-name">Rummy</div>
             <div class="game-desc">Form melds, empty your hand</div>
           </div>
         </div>
 
-        <div class="game-section-label" style="margin-top: 18px;">🎲 Board Games</div>
+        <div class="game-section-label" style="margin-top: 18px;">&#x1F3B2; Board Games</div>
         <div class="game-grid" id="game-grid-board">
           <div class="game-card" data-game="ludo">
-            <span class="game-icon">🎲</span>
+            <span class="game-icon">&#x1F3B2;</span>
             <div class="game-name">Ludo</div>
             <div class="game-desc">Roll dice, race your tokens home!</div>
           </div>
           <div class="game-card" data-game="chess">
-            <span class="game-icon">♟️</span>
+            <span class="game-icon">&#x265F;&#xFE0F;</span>
             <div class="game-name">Chess</div>
             <div class="game-desc">Classic strategy, checkmate wins</div>
           </div>
           <div class="game-card" data-game="battleship">
-            <span class="game-icon">🚢</span>
+            <span class="game-icon">&#x1F6A2;</span>
             <div class="game-name">Battleship</div>
             <div class="game-desc">Sink the enemy fleet!</div>
           </div>
           <div class="game-card" data-game="connectfour">
-            <span class="game-icon">🔴</span>
+            <span class="game-icon">&#x1F534;</span>
             <div class="game-name">Connect Four</div>
             <div class="game-desc">Drop discs, get 4 in a row!</div>
           </div>
           <div class="game-card" data-game="tictactoe">
-            <span class="game-icon">❌</span>
+            <span class="game-icon">&#x274C;</span>
             <div class="game-name">Tic Tac Toe</div>
             <div class="game-desc">Classic X's and O's</div>
           </div>
         </div>
 
-        <div class="game-section-label" style="margin-top: 18px;">🧩 Social & Deduction</div>
-        <div class="game-grid" id="game-grid-social">
-          <div class="game-card" data-game="spyfall">
-            <span class="game-icon">🕵️‍♂️</span>
-            <div class="game-name">Spyfall</div>
-            <div class="game-desc">Find the spy among you</div>
+        <div class="game-section-label" style="margin-top: 18px;">&#x1F389; Party Games</div>
+        <div class="game-grid" id="game-grid-drinking">
+          <div class="game-card" data-game="partyprompts">
+            <span class="game-icon">&#x1F389;</span>
+            <div class="game-name">Piloco</div>
+            <div class="game-desc">Wild challenges & dares</div>
           </div>
-          <div class="game-card" data-game="wavelength">
-            <span class="game-icon">📡</span>
-            <div class="game-name">Wavelength</div>
-            <div class="game-desc">Guess where on the spectrum</div>
+          <div class="game-card" data-game="kingscup">
+            <span class="game-icon">&#x1F451;</span>
+            <div class="game-name">King's Cup</div>
+            <div class="game-desc">Draw cards, follow the rules</div>
           </div>
-          <div class="game-card" data-game="justone">
-            <span class="game-icon">☝️</span>
-            <div class="game-name">Just One</div>
-            <div class="game-desc">Co-op word guessing</div>
+          <div class="game-card" data-game="mostlikelyto">
+            <span class="game-icon">&#x1F3AF;</span>
+            <div class="game-name">Most Likely To</div>
+            <div class="game-desc">Vote who's most likely</div>
+          </div>
+          <div class="game-card" data-game="neverhaveiever">
+            <span class="game-icon">&#x1F648;</span>
+            <div class="game-name">Never Have I Ever</div>
+            <div class="game-desc">Confess or stay safe</div>
+          </div>
+          <div class="game-card" data-game="truthordrink">
+            <span class="game-icon">&#x1F37A;</span>
+            <div class="game-name">Truth or Drink</div>
+            <div class="game-desc">Spill the truth or take a sip</div>
           </div>
           <div class="game-card" data-game="wouldyourather">
-            <span class="game-icon">🤔</span>
+            <span class="game-icon">&#x1F914;</span>
             <div class="game-name">Would You Rather</div>
             <div class="game-desc">Pick a side, join the majority</div>
           </div>
-          <div class="game-card" data-game="wordchain">
-            <span class="game-icon">🔗</span>
-            <div class="game-name">Word Chain</div>
-            <div class="game-desc">Chain words, don't get eliminated</div>
-          </div>
-          <div class="game-card" data-game="imposter">
-            <span class="game-icon">🤫</span>
-            <div class="game-name">Imposter</div>
-            <div class="game-desc">Find the fake among you</div>
-          </div>
-          <div class="game-card" data-game="coup">
-            <span class="game-icon">👑</span>
-            <div class="game-name">Coup</div>
-            <div class="game-desc">Bluff, steal & overthrow</div>
-          </div>
-          <div class="game-card" data-game="dixit">
-            <span class="game-icon">📖</span>
-            <div class="game-name">Dixit</div>
-            <div class="game-desc">Storytelling & creative guessing</div>
-          </div>
           <div class="game-card" data-game="knowme">
-            <span class="game-icon">💕</span>
+            <span class="game-icon">&#x1F495;</span>
             <div class="game-name">Know Me</div>
             <div class="game-desc">How well do you know each other?</div>
           </div>
         </div>
       </div>
-
-      <!-- Waiting message (non-host) -->
       <div class="card hidden" id="waiting-card">
         <div class="waiting">
           <div class="spinner"></div>
@@ -296,7 +326,7 @@
   <div class="modal-overlay" id="tournament-modal" style="display:none">
     <div class="modal-card">
       <button class="modal-close" id="tournament-modal-close">&times;</button>
-      <h2>🏆 Create Tournament</h2>
+      <h2>ðŸ† Create Tournament</h2>
       <div class="input-group">
         <label for="tournament-name">Tournament Name</label>
         <input type="text" id="tournament-name" placeholder="e.g. Friday Night Clash" maxlength="50">
@@ -310,13 +340,13 @@
           <label class="tournament-game-check"><input type="checkbox" value="emoji"> 😄 Emoji Decoder</label>
           <label class="tournament-game-check"><input type="checkbox" value="drawguess"> 🎨 Draw & Guess</label>
           <label class="tournament-game-check"><input type="checkbox" value="hangman"> 💀 Hangman</label>
-          <label class="tournament-game-check"><input type="checkbox" value="memorymatch"> 🃏 Memory Match</label>
-          <label class="tournament-game-check"><input type="checkbox" value="codenames"> 🕵️ Codenames</label>
+          <label class="tournament-game-check"><input type="checkbox" value="memorymatch"> ðŸƒ Memory Match</label>
+          <label class="tournament-game-check"><input type="checkbox" value="codenames"> ðŸ•µï¸ Codenames</label>
           <label class="tournament-game-check"><input type="checkbox" value="colorclash"> 🎴 Color Clash</label>
           <label class="tournament-game-check"><input type="checkbox" value="blackjack"> 🃑 Blackjack</label>
-          <label class="tournament-game-check"><input type="checkbox" value="spyfall"> 🕵️‍♂️ Spyfall</label>
+          <label class="tournament-game-check"><input type="checkbox" value="spyfall"> ðŸ•µï¸â€â™‚ï¸ Spyfall</label>
           <label class="tournament-game-check"><input type="checkbox" value="wavelength"> 📡 Wavelength</label>
-          <label class="tournament-game-check"><input type="checkbox" value="justone"> ☝️ Just One</label>
+          <label class="tournament-game-check"><input type="checkbox" value="justone"> â˜ï¸ Just One</label>
           <label class="tournament-game-check"><input type="checkbox" value="wouldyourather"> 🤔 Would You Rather</label>
           <label class="tournament-game-check"><input type="checkbox" value="wordchain"> 🔗 Word Chain</label>
           <label class="tournament-game-check"><input type="checkbox" value="ludo"> 🎲 Ludo</label>
@@ -332,7 +362,7 @@
     <div class="modal-card report-modal-pro">
       <button class="modal-close" id="report-modal-close">&times;</button>
       <div class="report-modal-header">
-        <div class="report-modal-icon">🐛</div>
+        <div class="report-modal-icon">ðŸ›</div>
         <div>
           <h2 class="report-modal-title">Report an Issue</h2>
           <p class="report-modal-subtitle">Help us improve Clutch by reporting bugs or suggesting features</p>
@@ -342,11 +372,11 @@
         <div class="input-group">
           <label for="report-category">Category</label>
           <select id="report-category" class="input">
-            <option value="bug">🐛 Bug Report</option>
+            <option value="bug">ðŸ› Bug Report</option>
             <option value="feature">💡 Feature Request</option>
             <option value="ui">🎨 UI/UX Issue</option>
             <option value="performance">⚡ Performance</option>
-            <option value="other">📝 Other</option>
+            <option value="other">ðŸ“ Other</option>
           </select>
         </div>
         <div class="input-group">
@@ -392,7 +422,7 @@
   <div class="toast" id="toast"></div>
 
   <footer class="site-footer">
-    <span class="footer-craft">Crafted with ❤️ by <strong>Manime</strong></span>
+    <span class="footer-craft">Crafted with â¤ï¸ by <strong>Manime</strong></span>
     <span class="footer-sep">•</span>
     <a href="https://github.com/ManikantaBathinedi/Clutch" target="_blank" rel="noopener" class="footer-link">GitHub</a>
   </footer>

@@ -66,7 +66,7 @@ const WORD_LIST = [
   'SWORN','SYRUP','TABLE','TAKEN','TASTE','TEACH','TEMPO','TENSE','TERMS','THEFT',
   'THEIR','THEME','THICK','THIEF','THING','THINK','THIRD','THORN','THREE','THREW',
   'THROW','THUMB','TIGHT','TIMER','TIRED','TITLE','TOAST','TODAY','TOKEN','TOTAL',
-  'TOUCH','TOUGH','TOWEL','TOWER','TOXIC','TRACE','TRACK','TRADE','Trail','TRAIN',
+  'TOUCH','TOUGH','TOWEL','TOWER','TOXIC','TRACE','TRACK','TRADE','TRAIL','TRAIN',
   'TRAIT','TRASH','TREAT','TREND','TRIAL','TRIBE','TRICK','TRIED','TROOP','TRUCK',
   'TRULY','TRUMP','TRUNK','TRUST','TRUTH','TUMOR','TWICE','TWIST','TYING','ULTRA',
   'UNCLE','UNDER','UNIFY','UNION','UNITE','UNITY','UNTIL','UPPER','UPSET','URBAN',
@@ -75,7 +75,18 @@ const WORD_LIST = [
   'WASTE','WATCH','WATER','WEAVE','WEIGH','WEIRD','WHEAT','WHEEL','WHERE','WHICH',
   'WHILE','WHITE','WHOLE','WHOSE','WIDER','WITCH','WOMAN','WORLD','WORRY','WORSE',
   'WORST','WORTH','WOULD','WOUND','WRATH','WRITE','WRONG','WROTE','YACHT','YIELD',
-  'YOUNG','YOUTH','ZEBRA'
+  'YOUNG','YOUTH','ZEBRA',
+  // Extended common words
+  'TASTY','TANGY','SALTY','JAZZY','FIZZY','TIPSY','BOOZY','GIDDY','PEAKY','CORNY',
+  'FUNKY','NERDY','WITTY','BUSHY','FOGGY','FUZZY','GUSTY','HEFTY','JERKY','LANKY',
+  'LOUSY','MESSY','MUSHY','NOISY','NUTTY','PESKY','RATTY','ROWDY','RUSTY','SASSY',
+  'SHADY','SILLY','SISSY','SMOKY','SPICY','TACKY','TATTY','TESTY','WACKY','WEEDY',
+  'WIMPY','ZINGY','BOSSY','CATTY','CHEWY','CORKY','CURVY','DITZY','DORKY','FLAKY',
+  'FUSSY','GASSY','GEEKY','GOOEY','GRIMY','GUSHY','GUTSY','HAMMY','HANDY','HUSKY',
+  'ITCHY','KINKY','LEAFY','MANGY','MEATY','MILKY','MUCKY','NERVY','NIPPY','PICKY',
+  'PUSHY','PUFFY','PUNKY','RAINY','REEDY','SAUCY','SEEDY','SHAKY','SILKY','SNAKY',
+  'SOGGY','SPIKY','SUDSY','TEARY','TIPPY','TOADY','WEARY','WINDY','WOODY','WORDY',
+  'ZESTY','RISKY','EDGY','OILY','WAVY'
 ].filter(w => w.length === 5);
 
 const MAX_GUESSES = 6;
@@ -130,8 +141,8 @@ function evaluateGuess(guess, word) {
   // Second pass: wrong position
   for (let i = 0; i < 5; i++) {
     if (result[i]) continue;
-    const idx = wordArr.findIndex((l, j) => l === guessArr[i] && !used[j] && !result[j]?.status);
-    if (idx !== -1 && !used[idx]) {
+    const idx = wordArr.findIndex((l, j) => l === guessArr[i] && !used[j]);
+    if (idx !== -1) {
       result[i] = { letter: guessArr[i], status: 'present' };
       used[idx] = true;
     } else {
@@ -151,6 +162,9 @@ function submitGuess(room, playerId, guess) {
 
   guess = (guess || '').toUpperCase().trim();
   if (guess.length !== 5 || !/^[A-Z]+$/.test(guess)) return null;
+
+  // Validate: must be a real word from the word list
+  if (!WORD_LIST.includes(guess)) return { error: 'Not a valid word' };
 
   const result = evaluateGuess(guess, gs.word);
   ps.guesses.push({ word: guess, result });

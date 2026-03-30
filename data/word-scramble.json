@@ -79,6 +79,66 @@
     {
       "word": "turtle",
       "hint": "Carries its home"
+    },
+    {
+      "word": "jaguar",
+      "hint": "Spotted jungle cat"
+    },
+    {
+      "word": "ferret",
+      "hint": "Small fuzzy pet"
+    },
+    {
+      "word": "walrus",
+      "hint": "Has big tusks"
+    },
+    {
+      "word": "iguana",
+      "hint": "A green reptile"
+    },
+    {
+      "word": "donkey",
+      "hint": "Stubbornly loyal animal"
+    },
+    {
+      "word": "osprey",
+      "hint": "A fish-hunting bird"
+    },
+    {
+      "word": "alpaca",
+      "hint": "South American fluffy animal"
+    },
+    {
+      "word": "coyote",
+      "hint": "Wild dog of the plains"
+    },
+    {
+      "word": "python",
+      "hint": "A large squeezing snake"
+    },
+    {
+      "word": "condor",
+      "hint": "Giant mountain bird"
+    },
+    {
+      "word": "poodle",
+      "hint": "A curly-haired dog"
+    },
+    {
+      "word": "beetle",
+      "hint": "Type of insect"
+    },
+    {
+      "word": "gopher",
+      "hint": "Underground rodent"
+    },
+    {
+      "word": "mantis",
+      "hint": "Praying insect"
+    },
+    {
+      "word": "pelican",
+      "hint": "Bird with a big beak pouch"
     }
   ],
   "nature": [
@@ -181,6 +241,66 @@
     {
       "word": "prism",
       "hint": "Splits light into colors"
+    },
+    {
+      "word": "geyser",
+      "hint": "Shoots hot water up"
+    },
+    {
+      "word": "tundra",
+      "hint": "Cold treeless plain"
+    },
+    {
+      "word": "lagoon",
+      "hint": "Shallow body of water"
+    },
+    {
+      "word": "meadow",
+      "hint": "Grassy open field"
+    },
+    {
+      "word": "pebble",
+      "hint": "Small smooth stone"
+    },
+    {
+      "word": "rapids",
+      "hint": "Fast-moving river water"
+    },
+    {
+      "word": "cavern",
+      "hint": "A large underground space"
+    },
+    {
+      "word": "lichen",
+      "hint": "Grows on rocks and trees"
+    },
+    {
+      "word": "quarry",
+      "hint": "Open pit mine"
+    },
+    {
+      "word": "aurora",
+      "hint": "Northern lights"
+    },
+    {
+      "word": "lagoon",
+      "hint": "Calm coastal water"
+    },
+    {
+      "word": "ravine",
+      "hint": "Narrow steep valley"
+    },
+    {
+      "word": "nebula",
+      "hint": "Cloud of gas in space"
+    },
+    {
+      "word": "typhoon",
+      "hint": "Pacific ocean storm"
+    },
+    {
+      "word": "monsoon",
+      "hint": "Heavy seasonal rain"
     }
   ],
   "food": [
@@ -263,6 +383,66 @@
     {
       "word": "pretzel",
       "hint": "Twisted salty snack"
+    },
+    {
+      "word": "muffin",
+      "hint": "Small baked breakfast"
+    },
+    {
+      "word": "radish",
+      "hint": "Red root vegetable"
+    },
+    {
+      "word": "cashew",
+      "hint": "Curved nut"
+    },
+    {
+      "word": "raisin",
+      "hint": "Dried grape"
+    },
+    {
+      "word": "turnip",
+      "hint": "Root vegetable"
+    },
+    {
+      "word": "salmon",
+      "hint": "Pink colored fish"
+    },
+    {
+      "word": "millet",
+      "hint": "Ancient grain"
+    },
+    {
+      "word": "noodle",
+      "hint": "Long thin food"
+    },
+    {
+      "word": "sorbet",
+      "hint": "Frozen fruit dessert"
+    },
+    {
+      "word": "almond",
+      "hint": "Popular nut"
+    },
+    {
+      "word": "papaya",
+      "hint": "Tropical orange fruit"
+    },
+    {
+      "word": "quinoa",
+      "hint": "Superfood grain"
+    },
+    {
+      "word": "biscuit",
+      "hint": "Flaky bread"
+    },
+    {
+      "word": "vanilla",
+      "hint": "Common ice cream flavor"
+    },
+    {
+      "word": "peaches",
+      "hint": "Fuzzy sweet fruit"
     }
   ],
   "objects": [
@@ -385,6 +565,46 @@
     {
       "word": "igloo",
       "hint": "Ice house"
+    },
+    {
+      "word": "satchel",
+      "hint": "A shoulder bag"
+    },
+    {
+      "word": "compass",
+      "hint": "Points north"
+    },
+    {
+      "word": "goblet",
+      "hint": "Fancy drinking cup"
+    },
+    {
+      "word": "beacon",
+      "hint": "A signal light"
+    },
+    {
+      "word": "ribbon",
+      "hint": "Tied in a bow"
+    },
+    {
+      "word": "zipper",
+      "hint": "Fastens clothing"
+    },
+    {
+      "word": "chisel",
+      "hint": "Carving tool"
+    },
+    {
+      "word": "thimble",
+      "hint": "Protects finger while sewing"
+    },
+    {
+      "word": "whistle",
+      "hint": "Makes a shrill sound"
+    },
+    {
+      "word": "trinket",
+      "hint": "Small decorative item"
     }
   ],
   "fantasy": [
@@ -487,6 +707,66 @@
     {
       "word": "rocket",
       "hint": "Goes to space"
+    },
+    {
+      "word": "sorcerer",
+      "hint": "Dark magic user"
+    },
+    {
+      "word": "centaur",
+      "hint": "Half horse half human"
+    },
+    {
+      "word": "griffin",
+      "hint": "Eagle and lion hybrid"
+    },
+    {
+      "word": "mermaid",
+      "hint": "Half fish half human"
+    },
+    {
+      "word": "phoenix",
+      "hint": "Bird that rises from ashes"
+    },
+    {
+      "word": "amulet",
+      "hint": "Magical necklace charm"
+    },
+    {
+      "word": "goblin",
+      "hint": "Small mischievous creature"
+    },
+    {
+      "word": "kraken",
+      "hint": "Giant sea monster"
+    },
+    {
+      "word": "oracle",
+      "hint": "Sees the future"
+    },
+    {
+      "word": "elixir",
+      "hint": "Magical healing drink"
+    },
+    {
+      "word": "minotaur",
+      "hint": "Bull-headed labyrinth creature"
+    },
+    {
+      "word": "warlock",
+      "hint": "Male witch"
+    },
+    {
+      "word": "talisman",
+      "hint": "Lucky magical object"
+    },
+    {
+      "word": "gargoyle",
+      "hint": "Stone creature on buildings"
+    },
+    {
+      "word": "scepter",
+      "hint": "Royal magic staff"
     }
   ]
 }

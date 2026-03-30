@@ -31,6 +31,11 @@ const dixitLogic = require('./game-logic/dixit');
 const knowmeLogic = require('./game-logic/knowme');
 const connectFourLogic = require('./game-logic/connectfour');
 const ticTacToeLogic = require('./game-logic/tictactoe');
+const partyPromptsLogic = require('./game-logic/partyprompts');
+const kingsCupLogic = require('./game-logic/kingscup');
+const mostLikelyToLogic = require('./game-logic/mostlikelyto');
+const neverHaveIEverLogic = require('./game-logic/neverhaveiever');
+const truthOrDrinkLogic = require('./game-logic/truthordrink');
 
 const app = express();
 const server = http.createServer(app);
@@ -486,7 +491,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.hostId !== socket.id) return;
 
-    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe'];
+    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe', 'partyprompts', 'kingscup', 'mostlikelyto', 'neverhaveiever', 'truthordrink'];
     if (!validGames.includes(gameType)) return;
 
     // Sanitize category
@@ -557,6 +562,11 @@ io.on('connection', (socket) => {
     else if (gameType === 'knowme') knowmeLogic.init(room, s);
     else if (gameType === 'connectfour') connectFourLogic.init(room);
     else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
+    else if (gameType === 'partyprompts') partyPromptsLogic.init(room, s);
+    else if (gameType === 'kingscup') kingsCupLogic.init(room);
+    else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, s);
+    else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, s);
+    else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, s);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
@@ -564,7 +574,7 @@ io.on('connection', (socket) => {
       room.status = 'lobby';
       room.lastGame = null;
       gameStartTimes.delete(room.code);
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -785,6 +795,13 @@ io.on('connection', (socket) => {
         data = wouldYouRatherLogic.getCurrentQuestion(room);
       }
 
+      // Drinking/Party games use standard game-state
+      if (gameType === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
+      if (gameType === 'kingscup') data = kingsCupLogic.getCurrentQuestion(room);
+      if (gameType === 'mostlikelyto') data = mostLikelyToLogic.getCurrentQuestion(room);
+      if (gameType === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
+      if (gameType === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
+
       if (data) io.to(room.code).emit('game-state', data);
     }, 3000);
   });
@@ -821,6 +838,69 @@ io.on('connection', (socket) => {
       result = wouldYouRatherLogic.handleAnswer(room, socket.id, answer);
     } else if (room.currentGame === 'knowme') {
       result = knowmeLogic.handleAnswer(room, socket.id, answer);
+    } else if (room.currentGame === 'partyprompts') {
+      result = partyPromptsLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        socket.emit('answer-result', result);
+        // Auto-advance when all players are done
+        const activePlayers = room.players.filter(p => !p.isSpectator);
+        const gs = room.gameState;
+        if (gs && gs.acknowledged && Object.keys(gs.acknowledged).length >= activePlayers.length) {
+          const roundData = partyPromptsLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
+    } else if (room.currentGame === 'kingscup') {
+      result = kingsCupLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        const state = kingsCupLogic.getCurrentQuestion(room);
+        if (state) io.to(room.code).emit('game-state', state);
+        if (room.gameState && room.gameState.gameOver) {
+          const results = kingsCupLogic.getResults(room);
+          io.to(room.code).emit('game-over', results);
+          room.status = 'lobby';
+          room.currentGame = null;
+        }
+        return;
+      }
+    } else if (room.currentGame === 'mostlikelyto') {
+      result = mostLikelyToLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        socket.emit('answer-result', result);
+        const activePlayers = room.players.filter(p => !p.isSpectator);
+        const gs = room.gameState;
+        if (gs && gs.votes && Object.keys(gs.votes).length >= activePlayers.length) {
+          const roundData = mostLikelyToLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
+    } else if (room.currentGame === 'neverhaveiever') {
+      result = neverHaveIEverLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        socket.emit('answer-result', result);
+        const activePlayers = room.players.filter(p => !p.isSpectator);
+        const gs = room.gameState;
+        if (gs && gs.answers && Object.keys(gs.answers).length >= activePlayers.length) {
+          const roundData = neverHaveIEverLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
+    } else if (room.currentGame === 'truthordrink') {
+      result = truthOrDrinkLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        socket.emit('answer-result', result);
+        // Auto-advance when hot seat player answers
+        const gs = room.gameState;
+        const hotSeatId = gs && gs.playerOrder ? gs.playerOrder[gs.currentRound % gs.playerOrder.length] : null;
+        if (hotSeatId && gs.answers && gs.answers[hotSeatId] !== undefined) {
+          const roundData = truthOrDrinkLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
     } else if (room.currentGame === 'drawguess') {
       result = drawGuessLogic.handleGuess(room, socket.id, answer);
       if (result) {
@@ -863,6 +943,10 @@ io.on('connection', (socket) => {
     else if (game === 'drawguess') logic = drawGuessLogic;
     else if (game === 'wouldyourather') logic = wouldYouRatherLogic;
     else if (game === 'knowme') logic = knowmeLogic;
+    else if (game === 'partyprompts') logic = partyPromptsLogic;
+    else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
+    else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
+    else if (game === 'truthordrink') logic = truthOrDrinkLogic;
     if (!logic) return;
 
     const hasNext = logic.nextRound(room);
@@ -874,6 +958,10 @@ io.on('connection', (socket) => {
       else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
       else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
       else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
+      else if (game === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
+      else if (game === 'mostlikelyto') data = mostLikelyToLogic.getCurrentQuestion(room);
+      else if (game === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
+      else if (game === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
       else if (game === 'drawguess') {
         // Draw & Guess: next turn starts with word choices
         const choiceData = drawGuessLogic.getWordChoices(room);
@@ -914,6 +1002,11 @@ io.on('connection', (socket) => {
     else if (game === 'drawguess') roundData = drawGuessLogic.getRoundResults(room);
     else if (game === 'wouldyourather') roundData = wouldYouRatherLogic.getRoundResults(room);
     else if (game === 'knowme') roundData = knowmeLogic.getRoundResults(room);
+    else if (game === 'partyprompts') roundData = partyPromptsLogic.getRoundResults(room);
+    else if (game === 'kingscup') roundData = kingsCupLogic.getRoundResults(room);
+    else if (game === 'mostlikelyto') roundData = mostLikelyToLogic.getRoundResults(room);
+    else if (game === 'neverhaveiever') roundData = neverHaveIEverLogic.getRoundResults(room);
+    else if (game === 'truthordrink') roundData = truthOrDrinkLogic.getRoundResults(room);
 
     if (roundData) io.to(room.code).emit('round-result', roundData);
   });
@@ -955,6 +1048,11 @@ io.on('connection', (socket) => {
     else if (game === 'knowme') logic = knowmeLogic;
     else if (game === 'connectfour') logic = connectFourLogic;
     else if (game === 'tictactoe') logic = ticTacToeLogic;
+    else if (game === 'partyprompts') logic = partyPromptsLogic;
+    else if (game === 'kingscup') logic = kingsCupLogic;
+    else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
+    else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
+    else if (game === 'truthordrink') logic = truthOrDrinkLogic;
 
     if (logic) {
       const results = logic.getResults(room);
@@ -1014,12 +1112,17 @@ io.on('connection', (socket) => {
     else if (gameType === 'knowme') knowmeLogic.init(room, settings);
     else if (gameType === 'connectfour') connectFourLogic.init(room);
     else if (gameType === 'tictactoe') ticTacToeLogic.init(room);
+    else if (gameType === 'partyprompts') partyPromptsLogic.init(room, settings);
+    else if (gameType === 'kingscup') kingsCupLogic.init(room);
+    else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, settings);
+    else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, settings);
+    else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, settings);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
       room.currentGame = null;
       room.status = 'lobby';
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -1191,6 +1294,11 @@ io.on('connection', (socket) => {
       if (gameType === 'wouldyourather') {
         data = wouldYouRatherLogic.getCurrentQuestion(room);
       }
+      if (gameType === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
+      if (gameType === 'kingscup') data = kingsCupLogic.getCurrentQuestion(room);
+      if (gameType === 'mostlikelyto') data = mostLikelyToLogic.getCurrentQuestion(room);
+      if (gameType === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
+      if (gameType === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
       if (data) io.to(room.code).emit('game-state', data);
     }, 3000);
   });
@@ -2163,6 +2271,10 @@ io.on('connection', (socket) => {
     if (!room || room.currentGame !== 'wordle') return;
     const result = wordleLogic.submitGuess(room, socket.id, guess);
     if (!result) return;
+    if (result.error) {
+      socket.emit('wordle-error', { message: result.error });
+      return;
+    }
     room.players.forEach(p => {
       const view = wordleLogic.getPlayerView(room, p.id);
       if (view) io.to(p.id).emit('wordle-update', view);

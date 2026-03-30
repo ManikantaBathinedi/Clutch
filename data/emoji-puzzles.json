@@ -84,6 +84,46 @@
       "emojis": "🎻🌹",
       "answer": "romance",
       "hint": "Love story"
+    },
+    {
+      "emojis": "🦖🏝️",
+      "answer": "jurassic world",
+      "hint": "Dinosaur theme park"
+    },
+    {
+      "emojis": "🚗⚡",
+      "answer": "cars",
+      "hint": "Pixar racing movie"
+    },
+    {
+      "emojis": "🐀👨‍🍳",
+      "answer": "ratatouille",
+      "hint": "Cooking rat movie"
+    },
+    {
+      "emojis": "🎈🏠👴",
+      "answer": "up",
+      "hint": "Pixar flying house"
+    },
+    {
+      "emojis": "🤖❤️🌱",
+      "answer": "wall-e",
+      "hint": "Robot love story"
+    },
+    {
+      "emojis": "🦸‍♂️🔨⚡",
+      "answer": "thor",
+      "hint": "Norse god superhero"
+    },
+    {
+      "emojis": "🐠🔍",
+      "answer": "finding dory",
+      "hint": "Sequel fish movie"
+    },
+    {
+      "emojis": "👸🐸💋",
+      "answer": "princess and the frog",
+      "hint": "Disney kiss story"
     }
   ],
   "nature": [
@@ -186,6 +226,56 @@
       "emojis": "🌈🦄",
       "answer": "unicorn",
       "hint": "Magical horse"
+    },
+    {
+      "emojis": "🌊🏄‍♂️",
+      "answer": "ocean wave",
+      "hint": "Surfing on this"
+    },
+    {
+      "emojis": "⛰️🌅",
+      "answer": "mountain sunrise",
+      "hint": "Dawn at altitude"
+    },
+    {
+      "emojis": "🌵☀️",
+      "answer": "desert",
+      "hint": "Hot dry place"
+    },
+    {
+      "emojis": "🦋🌺",
+      "answer": "pollination",
+      "hint": "Butterfly and flower"
+    },
+    {
+      "emojis": "❄️⛄",
+      "answer": "snowman",
+      "hint": "Winter creation"
+    },
+    {
+      "emojis": "🌊🐚",
+      "answer": "seashell",
+      "hint": "Beach treasure"
+    },
+    {
+      "emojis": "🍃🍂",
+      "answer": "autumn leaves",
+      "hint": "Fall foliage"
+    },
+    {
+      "emojis": "🌻☀️",
+      "answer": "sunflower",
+      "hint": "Faces the sun"
+    },
+    {
+      "emojis": "🐝🌸",
+      "answer": "pollinator",
+      "hint": "Bee on flower"
+    },
+    {
+      "emojis": "🌕🐺",
+      "answer": "howling wolf",
+      "hint": "Full moon creature"
     }
   ],
   "food": [
@@ -233,6 +323,86 @@
       "emojis": "🍎📱",
       "answer": "iphone",
       "hint": "Apple product"
+    },
+    {
+      "emojis": "🌮🇲🇽",
+      "answer": "tacos",
+      "hint": "Mexican food"
+    },
+    {
+      "emojis": "🍣🇯🇵",
+      "answer": "sushi",
+      "hint": "Japanese delicacy"
+    },
+    {
+      "emojis": "🥐☕",
+      "answer": "croissant",
+      "hint": "French pastry"
+    },
+    {
+      "emojis": "🍝🧄",
+      "answer": "pasta",
+      "hint": "Italian staple"
+    },
+    {
+      "emojis": "🥞🍁",
+      "answer": "pancakes",
+      "hint": "Breakfast stack"
+    },
+    {
+      "emojis": "🍫🥛",
+      "answer": "hot chocolate",
+      "hint": "Warm sweet drink"
+    },
+    {
+      "emojis": "🧇🍓",
+      "answer": "waffle",
+      "hint": "Grid-patterned breakfast"
+    },
+    {
+      "emojis": "🍱🥢",
+      "answer": "bento",
+      "hint": "Japanese lunch box"
+    },
+    {
+      "emojis": "🌽🔥",
+      "answer": "corn on the cob",
+      "hint": "Grilled vegetable"
+    },
+    {
+      "emojis": "🥑🍞",
+      "answer": "avocado toast",
+      "hint": "Trendy breakfast"
+    },
+    {
+      "emojis": "🍰🍓",
+      "answer": "strawberry cake",
+      "hint": "Sweet dessert"
+    },
+    {
+      "emojis": "🧁🎂",
+      "answer": "cupcake",
+      "hint": "Mini cake"
+    },
+    {
+      "emojis": "🥜🍯",
+      "answer": "peanut butter",
+      "hint": "Nutty spread"
+    },
+    {
+      "emojis": "🫕🧀",
+      "answer": "fondue",
+      "hint": "Melted cheese dish"
+    },
+    {
+      "emojis": "🍿🎬",
+      "answer": "movie snack",
+      "hint": "Cinema food"
+    },
+    {
+      "emojis": "🥗🥒",
+      "answer": "salad",
+      "hint": "Healthy meal"
     }
   ],
   "sports": [
@@ -280,6 +450,86 @@
       "emojis": "⛵🌊💨",
       "answer": "sailing",
       "hint": "Wind-powered boating"
+    },
+    {
+      "emojis": "⚾🏟️",
+      "answer": "baseball",
+      "hint": "America's pastime"
+    },
+    {
+      "emojis": "🏊💨",
+      "answer": "swimming race",
+      "hint": "Pool competition"
+    },
+    {
+      "emojis": "🤸‍♀️🏅",
+      "answer": "gymnastics",
+      "hint": "Olympic sport"
+    },
+    {
+      "emojis": "🏒🧊",
+      "answer": "ice hockey",
+      "hint": "Frozen rink sport"
+    },
+    {
+      "emojis": "🏓🏸",
+      "answer": "table tennis",
+      "hint": "Ping pong"
+    },
+    {
+      "emojis": "🚴🏔️",
+      "answer": "mountain biking",
+      "hint": "Off-road cycling"
+    },
+    {
+      "emojis": "🤼‍♂️🏆",
+      "answer": "wrestling",
+      "hint": "Grappling sport"
+    },
+    {
+      "emojis": "⛳🏌️",
+      "answer": "golf",
+      "hint": "Club and ball sport"
+    },
+    {
+      "emojis": "🏇🐎",
+      "answer": "horse racing",
+      "hint": "Track betting sport"
+    },
+    {
+      "emojis": "🥊🔔",
+      "answer": "boxing",
+      "hint": "Ring fight sport"
+    },
+    {
+      "emojis": "🎾🏆",
+      "answer": "tennis tournament",
+      "hint": "Grand slam event"
+    },
+    {
+      "emojis": "🏐🏖️",
+      "answer": "beach volleyball",
+      "hint": "Sandy court sport"
+    },
+    {
+      "emojis": "🤺⚔️",
+      "answer": "fencing",
+      "hint": "Sword sport"
+    },
+    {
+      "emojis": "🛹🏙️",
+      "answer": "skateboarding",
+      "hint": "Street tricks"
+    },
+    {
+      "emojis": "🧗🏔️",
+      "answer": "rock climbing",
+      "hint": "Scaling walls"
+    },
+    {
+      "emojis": "🎣🐟",
+      "answer": "fishing",
+      "hint": "Catching fish"
     }
   ],
   "popculture": [
@@ -432,6 +682,56 @@
       "emojis": "🎓📜",
       "answer": "graduation",
       "hint": "School completion"
+    },
+    {
+      "emojis": "🦃🍽️",
+      "answer": "thanksgiving",
+      "hint": "November holiday"
+    },
+    {
+      "emojis": "🎆🎇",
+      "answer": "fireworks",
+      "hint": "New Year celebration"
+    },
+    {
+      "emojis": "🏋️‍♂️💪🥇",
+      "answer": "olympics",
+      "hint": "World sports event"
+    },
+    {
+      "emojis": "🎭🎬⭐",
+      "answer": "hollywood",
+      "hint": "Movie capital"
+    },
+    {
+      "emojis": "📺🍿😂",
+      "answer": "sitcom",
+      "hint": "Comedy TV show"
+    },
+    {
+      "emojis": "🎤💃🕺",
+      "answer": "dance party",
+      "hint": "Music and moves"
+    },
+    {
+      "emojis": "🧙‍♂️⚡🏰",
+      "answer": "hogwarts",
+      "hint": "Wizard school"
+    },
+    {
+      "emojis": "🤖🌐💻",
+      "answer": "artificial intelligence",
+      "hint": "Smart machines"
+    },
+    {
+      "emojis": "🏠🔑❤️",
+      "answer": "home sweet home",
+      "hint": "Where you belong"
+    },
+    {
+      "emojis": "💀🌹🇲🇽",
+      "answer": "day of the dead",
+      "hint": "Mexican festival"
     }
   ]
 }

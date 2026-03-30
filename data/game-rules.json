@@ -415,5 +415,71 @@
       "If all 9 cells are filled with no winner, it's a draw"
     ],
     "tips": "Always take the center if it's free. Corner openings give you the best chance to set up a fork!"
+  },
+  "partyprompts": {
+    "name": "Piloco",
+    "icon": "🎉",
+    "players": "2+",
+    "summary": "Wild prompts, dares, and challenges for the whole group!",
+    "rules": [
+      "Each round a prompt appears — it could target everyone, a specific player, or set up a versus challenge",
+      "Prompts include dares, rules, and group challenges with player names filled in",
+      "After reading the prompt, tap 'Done!' when you've completed or acknowledged it",
+      "There's no scoring — it's all about having fun and keeping the party going!"
+    ],
+    "tips": "Don't hold back! The crazier the energy, the better the party. 🎉"
+  },
+  "kingscup": {
+    "name": "King's Cup",
+    "icon": "👑",
+    "players": "2+",
+    "summary": "Draw cards from the deck — each card has a drinking rule!",
+    "rules": [
+      "Players take turns drawing a card from the deck",
+      "Each card has a rule: A=Waterfall, 2=You (pick someone), 3=Me (you drink), 4=Floor (last to touch floor drinks)",
+      "5=Guys drink, 6=Chicks drink, 7=Heaven (last to point up), 8=Mate (pick a partner), 9=Rhyme, 10=Categories",
+      "J=Make a Rule, Q=Question Master, K=Pour into King's Cup",
+      "The 4th King drawn must drink the King's Cup — game over!"
+    ],
+    "tips": "Remember the active rules! The Question Master and rule cards stay in effect until the next one is drawn."
+  },
+  "mostlikelyto": {
+    "name": "Most Likely To",
+    "icon": "🎯",
+    "players": "3+",
+    "summary": "Vote on who's most likely to do something — most votes drinks!",
+    "rules": [
+      "Each round shows a 'Most likely to...' scenario",
+      "Everyone votes for the player they think is most likely",
+      "After voting, results are revealed — the player with the most votes drinks!",
+      "Each vote you receive counts as 100 points (more votes = more drinks)"
+    ],
+    "tips": "Be honest with your votes — that's what makes it fun! Don't just target one person every time. 😏"
+  },
+  "neverhaveiever": {
+    "name": "Never Have I Ever",
+    "icon": "🙈",
+    "players": "2+",
+    "summary": "Confess your experiences or stay safe — but everyone will know!",
+    "rules": [
+      "Each round shows a 'Never have I ever...' statement",
+      "If you HAVE done it, tap '🍻 I Have' (you drink and get 100 points)",
+      "If you HAVEN'T done it, tap '😇 I Haven't' (you're safe)",
+      "After everyone answers, results show who confessed and who stayed innocent"
+    ],
+    "tips": "The juicier the confessions, the more fun! Don't be shy. 🙊"
+  },
+  "truthordrink": {
+    "name": "Truth or Drink",
+    "icon": "🍺",
+    "players": "2+",
+    "summary": "Answer a spicy question truthfully or take a drink!",
+    "rules": [
+      "Each round, one player is in the hot seat with a spicy truth question",
+      "The hot seat player chooses: answer truthfully (🗣️ Truth, 150 pts) or skip and drink (🍺 Drink, 50 pts)",
+      "Other players watch and react — they can vote whether they believe the answer!",
+      "The hot seat rotates each round so everyone gets their turn in the spotlight"
+    ],
+    "tips": "The best truths are the ones that surprise everyone! But if it's too spicy... just drink. 🍺"
   }
 }

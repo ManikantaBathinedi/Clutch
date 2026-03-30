@@ -205,4 +205,16 @@
 
   socket.on('wordle-state', render);
   socket.on('wordle-update', render);
+
+  socket.on('wordle-error', ({ message }) => {
+    if (typeof SFX !== 'undefined') SFX.wrong();
+    // Shake the current input row
+    const rows = document.querySelectorAll('.wordle-row');
+    const currentRow = rows[currentData ? (currentData.myGuesses || []).length : 0];
+    if (currentRow) {
+      currentRow.classList.add('wordle-shake');
+      setTimeout(() => currentRow.classList.remove('wordle-shake'), 500);
+    }
+    if (typeof showToast === 'function') showToast(message, 'error');
+  });
 })();
