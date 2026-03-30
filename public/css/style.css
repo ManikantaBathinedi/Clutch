@@ -2498,9 +2498,9 @@ input[type="password"]::placeholder {
 
 [data-theme="light"] .game-card {
   background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-bottom-width: 3px;
-  border-bottom-style: solid;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-left: 1px solid rgba(0, 0, 0, 0.06);
+  border-right: 1px solid rgba(0, 0, 0, 0.06);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
 
