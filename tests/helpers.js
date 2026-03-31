@@ -56,6 +56,7 @@ function startServer() {
     const mostLikelyToLogic = require('../game-logic/mostlikelyto');
     const neverHaveIEverLogic = require('../game-logic/neverhaveiever');
     const truthOrDrinkLogic = require('../game-logic/truthordrink');
+    const typingRaceLogic = require('../game-logic/typingrace');
 
     const rooms = new Map();
 
@@ -165,7 +166,7 @@ function startServer() {
       socket.on('select-game', ({ gameType, category, settings }) => {
         const room = rooms.get(socket.roomCode);
         if (!room || room.hostId !== socket.id) return;
-        const validGames = ['trivia','wordscramble','speedmath','emoji','drawguess','codenames','colorclash','blackjack','hangman','memorymatch','spyfall','wavelength','justone','wouldyourather','wordchain','imposter','ludo','poker','chess','battleship','rummy','coup','wordle','dixit','knowme','connectfour','tictactoe','partyprompts','kingscup','mostlikelyto','neverhaveiever','truthordrink'];
+        const validGames = ['trivia','wordscramble','speedmath','emoji','drawguess','codenames','colorclash','blackjack','hangman','memorymatch','spyfall','wavelength','justone','wouldyourather','wordchain','imposter','ludo','poker','chess','battleship','rummy','coup','wordle','dixit','knowme','connectfour','tictactoe','partyprompts','kingscup','mostlikelyto','neverhaveiever','truthordrink','typingrace'];
         if (!validGames.includes(gameType)) return;
         const cat = (typeof category === 'string') ? category.trim().toLowerCase() : 'all';
         const s = {};
@@ -209,6 +210,7 @@ function startServer() {
         else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, s);
         else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, s);
         else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, s);
+        else if (gameType === 'typingrace') typingRaceLogic.init(room, s);
 
         io.to(room.code).emit('game-starting', { gameType });
 
@@ -367,6 +369,10 @@ function startServer() {
             const d = truthOrDrinkLogic.getCurrentQuestion(room);
             if (d) io.to(room.code).emit('game-state', d);
           }
+          else if (gameType === 'typingrace') {
+            const d = typingRaceLogic.getCurrentPrompt(room);
+            if (d) io.to(room.code).emit('game-state', d);
+          }
         }, 100);
       });
 
@@ -447,6 +453,20 @@ function startServer() {
             return;
           }
         }
+        else if (room.currentGame === 'typingrace') {
+          result = typingRaceLogic.handleAnswer(room, socket.id, answer);
+          if (result) {
+            io.to(room.code).emit('typing-progress', result);
+            const gs = room.gameState;
+            const activePlayers = room.players.filter(p => !p.isSpectator);
+            const allFinished = activePlayers.every(p => gs.playerProgress[p.id] && gs.playerProgress[p.id].finished);
+            if (allFinished) {
+              const roundData = typingRaceLogic.getRoundResults(room);
+              if (roundData) io.to(room.code).emit('round-result', roundData);
+            }
+            return;
+          }
+        }
         else if (room.currentGame === 'drawguess') {
           result = drawGuessLogic.handleGuess(room, socket.id, answer);
           if (result) {
@@ -487,6 +507,7 @@ function startServer() {
         else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
         else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
         else if (game === 'truthordrink') logic = truthOrDrinkLogic;
+        else if (game === 'typingrace') logic = typingRaceLogic;
         if (!logic) return;
         const hasNext = logic.nextRound(room);
         if (hasNext) {
@@ -495,6 +516,7 @@ function startServer() {
           else if (game === 'wordscramble') data = wordScrambleLogic.getCurrentWord(room);
           else if (game === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
           else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
+          else if (game === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
           else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
           else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
           else if (game === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
@@ -537,6 +559,7 @@ function startServer() {
         else if (game === 'mostlikelyto') roundData = mostLikelyToLogic.getRoundResults(room);
         else if (game === 'neverhaveiever') roundData = neverHaveIEverLogic.getRoundResults(room);
         else if (game === 'truthordrink') roundData = truthOrDrinkLogic.getRoundResults(room);
+        else if (game === 'typingrace') roundData = typingRaceLogic.getRoundResults(room);
         if (roundData) io.to(room.code).emit('round-result', roundData);
       });
 
@@ -578,6 +601,7 @@ function startServer() {
         else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
         else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
         else if (game === 'truthordrink') logic = truthOrDrinkLogic;
+        else if (game === 'typingrace') logic = typingRaceLogic;
         if (logic) {
           const results = logic.getResults(room);
           io.to(room.code).emit('game-over', results);
@@ -623,6 +647,7 @@ function startServer() {
         else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, settings);
         else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, settings);
         else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, settings);
+        else if (gameType === 'typingrace') typingRaceLogic.init(room, settings);
         io.to(room.code).emit('game-starting', { gameType });
       });
 

@@ -139,7 +139,7 @@ function renderPlayers(players) {
 
 // ─── GAME SELECTION (HOST) ───
 const gamesWithCategories = ['trivia', 'wordscramble', 'emoji', 'hangman', 'imposter'];
-const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme', 'partyprompts', 'mostlikelyto', 'neverhaveiever', 'truthordrink'];
+const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme', 'partyprompts', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace'];
 const defaultSettings = {
   trivia:       { rounds: 10, timeLimit: 15, timeLabel: 'sec/question' },
   wordscramble: { rounds: 10, timeLimit: 20, timeLabel: 'sec/word' },
@@ -157,7 +157,8 @@ const defaultSettings = {
   partyprompts: { rounds: 15, timeLimit: 10, timeLabel: 'sec/prompt' },
   mostlikelyto: { rounds: 10, timeLimit: 20, timeLabel: 'sec/question' },
   neverhaveiever: { rounds: 10, timeLimit: 15, timeLabel: 'sec/statement' },
-  truthordrink: { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' }
+  truthordrink: { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' },
+  typingrace:   { rounds: 3,  timeLimit: 30, timeLabel: 'sec/round' }
 };
 let pendingGameType = null;
 let pendingCategory = 'all';
@@ -482,7 +483,8 @@ socket.on('join-as-spectator', ({ roomCode: code, gameType }) => {
     kingscup:     { icon: '👑', label: "King's Cup",      script: '/js/games/kingscup.js' },
     mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
     neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
-    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' }
+    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' },
+    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' }
   };
 
   const config = gameConfig[gameType];
@@ -572,7 +574,8 @@ socket.on('game-starting', ({ gameType }) => {
     kingscup:     { icon: '👑', label: "King's Cup",      script: '/js/games/kingscup.js' },
     mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
     neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
-    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' }
+    truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' },
+    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' }
   };
 
   const config = gameConfig[gameType];

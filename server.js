@@ -36,6 +36,7 @@ const kingsCupLogic = require('./game-logic/kingscup');
 const mostLikelyToLogic = require('./game-logic/mostlikelyto');
 const neverHaveIEverLogic = require('./game-logic/neverhaveiever');
 const truthOrDrinkLogic = require('./game-logic/truthordrink');
+const typingRaceLogic = require('./game-logic/typingrace');
 
 const app = express();
 const server = http.createServer(app);
@@ -491,7 +492,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.hostId !== socket.id) return;
 
-    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe', 'partyprompts', 'kingscup', 'mostlikelyto', 'neverhaveiever', 'truthordrink'];
+    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe', 'partyprompts', 'kingscup', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace'];
     if (!validGames.includes(gameType)) return;
 
     // Sanitize category
@@ -567,6 +568,7 @@ io.on('connection', (socket) => {
     else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, s);
     else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, s);
     else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, s);
+    else if (gameType === 'typingrace') typingRaceLogic.init(room, s);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
@@ -588,6 +590,7 @@ io.on('connection', (socket) => {
       else if (gameType === 'wordscramble') data = wordScrambleLogic.getCurrentWord(room);
       else if (gameType === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (gameType === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
+      else if (gameType === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
       else if (gameType === 'drawguess') {
         // Draw & Guess: send word choices to drawer first
         data = drawGuessLogic.getWordChoices(room);
@@ -901,6 +904,23 @@ io.on('connection', (socket) => {
         }
         return;
       }
+    } else if (room.currentGame === 'typingrace') {
+      result = typingRaceLogic.handleAnswer(room, socket.id, answer);
+      if (result) {
+        // Broadcast progress to ALL players so they can see each other's live progress
+        io.to(room.code).emit('typing-progress', result);
+
+        // Check if all players finished
+        const gs = room.gameState;
+        const activePlayers = room.players.filter(p => !p.isSpectator);
+        const allFinished = activePlayers.every(p => gs.playerProgress[p.id] && gs.playerProgress[p.id].finished);
+        if (allFinished) {
+          // Auto show results when everyone is done
+          const roundData = typingRaceLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
     } else if (room.currentGame === 'drawguess') {
       result = drawGuessLogic.handleGuess(room, socket.id, answer);
       if (result) {
@@ -947,6 +967,7 @@ io.on('connection', (socket) => {
     else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
     else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
     else if (game === 'truthordrink') logic = truthOrDrinkLogic;
+    else if (game === 'typingrace') logic = typingRaceLogic;
     if (!logic) return;
 
     const hasNext = logic.nextRound(room);
@@ -956,6 +977,7 @@ io.on('connection', (socket) => {
       else if (game === 'wordscramble') data = wordScrambleLogic.getCurrentWord(room);
       else if (game === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
+      else if (game === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
       else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
       else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
       else if (game === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
@@ -1007,6 +1029,7 @@ io.on('connection', (socket) => {
     else if (game === 'mostlikelyto') roundData = mostLikelyToLogic.getRoundResults(room);
     else if (game === 'neverhaveiever') roundData = neverHaveIEverLogic.getRoundResults(room);
     else if (game === 'truthordrink') roundData = truthOrDrinkLogic.getRoundResults(room);
+    else if (game === 'typingrace') roundData = typingRaceLogic.getRoundResults(room);
 
     if (roundData) io.to(room.code).emit('round-result', roundData);
   });
@@ -1053,6 +1076,7 @@ io.on('connection', (socket) => {
     else if (game === 'mostlikelyto') logic = mostLikelyToLogic;
     else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
     else if (game === 'truthordrink') logic = truthOrDrinkLogic;
+    else if (game === 'typingrace') logic = typingRaceLogic;
 
     if (logic) {
       const results = logic.getResults(room);
@@ -1117,6 +1141,7 @@ io.on('connection', (socket) => {
     else if (gameType === 'mostlikelyto') mostLikelyToLogic.init(room, settings);
     else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, settings);
     else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, settings);
+    else if (gameType === 'typingrace') typingRaceLogic.init(room, settings);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
@@ -1136,6 +1161,7 @@ io.on('connection', (socket) => {
       else if (gameType === 'wordscramble') data = wordScrambleLogic.getCurrentWord(room);
       else if (gameType === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (gameType === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
+      else if (gameType === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
       else if (gameType === 'drawguess') {
         data = drawGuessLogic.getWordChoices(room);
         if (data) {
@@ -1299,6 +1325,7 @@ io.on('connection', (socket) => {
       if (gameType === 'mostlikelyto') data = mostLikelyToLogic.getCurrentQuestion(room);
       if (gameType === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
       if (gameType === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
+      if (gameType === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
       if (data) io.to(room.code).emit('game-state', data);
     }, 3000);
   });

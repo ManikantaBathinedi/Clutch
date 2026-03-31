@@ -1202,6 +1202,180 @@ input[type="password"]::placeholder {
 .game-card[data-game="truthordrink"]::before { background: linear-gradient(135deg, rgba(239, 68, 68, 0.12) 0%, transparent 70%); }
 .game-card[data-game="truthordrink"]:hover { border-color: #ef4444; box-shadow: 0 12px 28px rgba(239, 68, 68, 0.2); }
 
+.game-card[data-game="typingrace"] { border-bottom: 3px solid #06b6d4; }
+.game-card[data-game="typingrace"]::before { background: linear-gradient(135deg, rgba(6, 182, 212, 0.12) 0%, transparent 70%); }
+.game-card[data-game="typingrace"]:hover { border-color: #06b6d4; box-shadow: 0 12px 28px rgba(6, 182, 212, 0.2); }
+
+/* ─── TYPING RACE GAME STYLES ─── */
+.tr-prompt-box {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 16px 0;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 1.25rem;
+  line-height: 2;
+  letter-spacing: 0.5px;
+  color: var(--text-dim);
+  word-wrap: break-word;
+  user-select: none;
+  min-height: 80px;
+}
+
+.tr-char {
+  transition: color 0.05s;
+}
+
+.tr-char.correct {
+  color: var(--success);
+}
+
+.tr-char.incorrect {
+  color: var(--danger);
+  text-decoration: underline;
+}
+
+.tr-cursor {
+  position: absolute;
+  width: 2px;
+  height: 1.4em;
+  background: var(--accent);
+  animation: tr-blink 1s step-end infinite;
+}
+
+@keyframes tr-blink {
+  50% { opacity: 0; }
+}
+
+.tr-game-input {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.tr-input-area {
+  max-width: 100%;
+  margin: 0 auto 20px;
+}
+
+.tr-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-bottom: 20px;
+}
+
+.tr-stat {
+  text-align: center;
+}
+
+.tr-stat-val {
+  display: block;
+  font-size: 1.8rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.tr-stat-label {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tr-players-section {
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--bg-card);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+
+.tr-player-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tr-player-bar.finished .tr-progress-fill {
+  background: var(--success);
+}
+
+.tr-player-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 80px;
+  color: var(--text);
+}
+
+.tr-progress-track {
+  flex: 1;
+  height: 8px;
+  background: var(--bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tr-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width 0.15s ease;
+}
+
+.tr-wpm {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  min-width: 60px;
+  text-align: right;
+}
+
+.tr-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.tr-results-table th {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.tr-results-table td {
+  padding: 10px;
+  font-size: 0.88rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+}
+
+.tr-result-row {
+  animation: fadeSlideIn 0.4s ease both;
+}
+
+.tr-rank {
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.tr-name {
+  font-weight: 600;
+}
+
+.tr-total {
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .game-card.disabled {
   opacity: 0.3;
   cursor: not-allowed;
