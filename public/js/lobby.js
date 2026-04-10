@@ -139,7 +139,7 @@ function renderPlayers(players) {
 
 // ─── GAME SELECTION (HOST) ───
 const gamesWithCategories = ['trivia', 'wordscramble', 'emoji', 'hangman', 'imposter'];
-const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme', 'partyprompts', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace'];
+const gamesWithSettings = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'hangman', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'knowme', 'partyprompts', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace', 'contexto'];
 const defaultSettings = {
   trivia:       { rounds: 10, timeLimit: 15, timeLabel: 'sec/question' },
   wordscramble: { rounds: 10, timeLimit: 20, timeLabel: 'sec/word' },
@@ -158,7 +158,9 @@ const defaultSettings = {
   mostlikelyto: { rounds: 10, timeLimit: 20, timeLabel: 'sec/question' },
   neverhaveiever: { rounds: 10, timeLimit: 15, timeLabel: 'sec/statement' },
   truthordrink: { rounds: 10, timeLimit: 30, timeLabel: 'sec/question' },
-  typingrace:   { rounds: 3,  timeLimit: 30, timeLabel: 'sec/round' }
+  typingrace:   { rounds: 3,  timeLimit: 30, timeLabel: 'sec/round' },
+  contexto:     { rounds: 3,  timeLimit: 90, timeLabel: 'sec/round' },
+  mafia:        { rounds: 1,  timeLimit: 60, timeLabel: 'sec discussion' }
 };
 let pendingGameType = null;
 let pendingCategory = 'all';
@@ -265,7 +267,7 @@ socket.on('categories-list', ({ gameType, categories }) => {
 });
 
 function showCategoryPicker(gameType, categories) {
-  const gameLabels = { trivia: 'Trivia', wordscramble: 'Word Scramble', emoji: 'Emoji Decoder', imposter: 'Imposter' };
+  const gameLabels = { trivia: 'Trivia', wordscramble: 'Word Scramble', emoji: 'Emoji Decoder', imposter: 'Imposter', mafia: 'Mafia' };
   const categoryIcons = {
     general: '📋', science: '🔬', movies: '🎬', sports: '⚽', geography: '🌍',
     technology: '💻', history: '📜', animals: '🐾', nature: '🌿', food: '🍔',
@@ -319,7 +321,7 @@ function showCategoryPicker(gameType, categories) {
 
 // ─── SETTINGS MODAL ───
 function showSettingsModal(gameType) {
-  const gameLabels = { trivia: 'Trivia', wordscramble: 'Word Scramble', speedmath: 'Speed Math', emoji: 'Emoji Decoder', drawguess: 'Draw & Guess', imposter: 'Imposter' };
+  const gameLabels = { trivia: 'Trivia', wordscramble: 'Word Scramble', speedmath: 'Speed Math', emoji: 'Emoji Decoder', drawguess: 'Draw & Guess', imposter: 'Imposter', mafia: 'Mafia' };
   const def = defaultSettings[gameType] || { rounds: 10, timeLimit: 15, timeLabel: 'seconds' };
 
   const overlay = document.createElement('div');
@@ -484,7 +486,9 @@ socket.on('join-as-spectator', ({ roomCode: code, gameType }) => {
     mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
     neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
     truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' },
-    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' }
+    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' },
+    contexto:     { icon: '🔍', label: 'Contexto',            script: '/js/games/contexto.js' },
+    mafia:        { icon: '🗡️', label: 'Mafia',              script: '/js/games/mafia.js' }
   };
 
   const config = gameConfig[gameType];
@@ -575,7 +579,9 @@ socket.on('game-starting', ({ gameType }) => {
     mostlikelyto: { icon: '🎯', label: 'Most Likely To',   script: '/js/games/mostlikelyto.js' },
     neverhaveiever: { icon: '🙈', label: 'Never Have I Ever', script: '/js/games/neverhaveiever.js' },
     truthordrink: { icon: '🍺', label: 'Truth or Drink',   script: '/js/games/truthordrink.js' },
-    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' }
+    typingrace:   { icon: '🐵', label: 'Monkey Press',       script: '/js/games/typingrace.js' },
+    contexto:     { icon: '🔍', label: 'Contexto',            script: '/js/games/contexto.js' },
+    mafia:        { icon: '🗡️', label: 'Mafia',              script: '/js/games/mafia.js' }
   };
 
   const config = gameConfig[gameType];
@@ -881,7 +887,8 @@ function resetGameClientState() {
     'connectfour-state', 'connectfour-update',
     'tictactoe-state', 'tictactoe-update',
     'partyprompts-state', 'kingscup-state',
-    'mostlikelyto-state', 'neverhaveiever-state', 'truthordrink-state'
+    'mostlikelyto-state', 'neverhaveiever-state', 'truthordrink-state',
+    'contexto-guess-result', 'contexto-progress'
   ];
 
   gameEvents.forEach(eventName => socket.off(eventName));

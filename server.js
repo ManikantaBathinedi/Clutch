@@ -37,6 +37,8 @@ const mostLikelyToLogic = require('./game-logic/mostlikelyto');
 const neverHaveIEverLogic = require('./game-logic/neverhaveiever');
 const truthOrDrinkLogic = require('./game-logic/truthordrink');
 const typingRaceLogic = require('./game-logic/typingrace');
+const contextoLogic = require('./game-logic/contexto');
+const mafiaLogic = require('./game-logic/mafia');
 
 const app = express();
 const server = http.createServer(app);
@@ -492,7 +494,7 @@ io.on('connection', (socket) => {
     const room = rooms.get(socket.roomCode);
     if (!room || room.hostId !== socket.id) return;
 
-    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe', 'partyprompts', 'kingscup', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace'];
+    const validGames = ['trivia', 'wordscramble', 'speedmath', 'emoji', 'drawguess', 'codenames', 'colorclash', 'blackjack', 'hangman', 'memorymatch', 'spyfall', 'wavelength', 'justone', 'wouldyourather', 'wordchain', 'imposter', 'ludo', 'poker', 'chess', 'battleship', 'rummy', 'coup', 'wordle', 'dixit', 'knowme', 'connectfour', 'tictactoe', 'partyprompts', 'kingscup', 'mostlikelyto', 'neverhaveiever', 'truthordrink', 'typingrace', 'contexto', 'mafia'];
     if (!validGames.includes(gameType)) return;
 
     // Sanitize category
@@ -569,6 +571,8 @@ io.on('connection', (socket) => {
     else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, s);
     else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, s);
     else if (gameType === 'typingrace') typingRaceLogic.init(room, s);
+    else if (gameType === 'contexto') contextoLogic.init(room, s);
+    else if (gameType === 'mafia') mafiaLogic.init(room, s);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
@@ -576,7 +580,7 @@ io.on('connection', (socket) => {
       room.status = 'lobby';
       room.lastGame = null;
       gameStartTimes.delete(room.code);
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2, mafia: 4 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -591,6 +595,7 @@ io.on('connection', (socket) => {
       else if (gameType === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (gameType === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
       else if (gameType === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
+      else if (gameType === 'contexto') data = contextoLogic.getCurrentPrompt(room);
       else if (gameType === 'drawguess') {
         // Draw & Guess: send word choices to drawer first
         data = drawGuessLogic.getWordChoices(room);
@@ -694,6 +699,14 @@ io.on('connection', (socket) => {
       if (gameType === 'imposter') {
         room.players.forEach(p => {
           if (!p.isSpectator) io.to(p.id).emit('imposter-state', imposterLogic.getPlayerView(room, p.id));
+        });
+        return;
+      }
+
+      // Mafia: send per-player view (role-dependent)
+      if (gameType === 'mafia') {
+        room.players.forEach(p => {
+          if (!p.isSpectator) io.to(p.id).emit('mafia-state', mafiaLogic.getPlayerView(room, p.id));
         });
         return;
       }
@@ -921,6 +934,27 @@ io.on('connection', (socket) => {
         }
         return;
       }
+    } else if (room.currentGame === 'contexto') {
+      result = contextoLogic.handleGuess(room, socket.id, answer);
+      if (result) {
+        // Send guess result only to the player who guessed
+        socket.emit('contexto-guess-result', result);
+        // Broadcast progress to all players
+        if (result.type === 'ranked' || result.type === 'found') {
+          io.to(room.code).emit('contexto-progress', {
+            playerId: socket.id,
+            guessCount: result.totalGuesses,
+            bestRank: result.bestRank,
+            found: result.type === 'found'
+          });
+        }
+        // Check if all players found the answer
+        if (contextoLogic.allPlayersFound(room)) {
+          const roundData = contextoLogic.getRoundResults(room);
+          if (roundData) io.to(room.code).emit('round-result', roundData);
+        }
+        return;
+      }
     } else if (room.currentGame === 'drawguess') {
       result = drawGuessLogic.handleGuess(room, socket.id, answer);
       if (result) {
@@ -968,6 +1002,7 @@ io.on('connection', (socket) => {
     else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
     else if (game === 'truthordrink') logic = truthOrDrinkLogic;
     else if (game === 'typingrace') logic = typingRaceLogic;
+    else if (game === 'contexto') logic = contextoLogic;
     if (!logic) return;
 
     const hasNext = logic.nextRound(room);
@@ -978,6 +1013,7 @@ io.on('connection', (socket) => {
       else if (game === 'speedmath') data = speedMathLogic.getCurrentProblem(room);
       else if (game === 'emoji') data = emojiLogic.getCurrentPuzzle(room);
       else if (game === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
+      else if (game === 'contexto') data = contextoLogic.getCurrentPrompt(room);
       else if (game === 'wouldyourather') data = wouldYouRatherLogic.getCurrentQuestion(room);
       else if (game === 'knowme') data = knowmeLogic.getCurrentQuestion(room);
       else if (game === 'partyprompts') data = partyPromptsLogic.getCurrentQuestion(room);
@@ -1030,6 +1066,7 @@ io.on('connection', (socket) => {
     else if (game === 'neverhaveiever') roundData = neverHaveIEverLogic.getRoundResults(room);
     else if (game === 'truthordrink') roundData = truthOrDrinkLogic.getRoundResults(room);
     else if (game === 'typingrace') roundData = typingRaceLogic.getRoundResults(room);
+    else if (game === 'contexto') roundData = contextoLogic.getRoundResults(room);
 
     if (roundData) io.to(room.code).emit('round-result', roundData);
   });
@@ -1077,6 +1114,8 @@ io.on('connection', (socket) => {
     else if (game === 'neverhaveiever') logic = neverHaveIEverLogic;
     else if (game === 'truthordrink') logic = truthOrDrinkLogic;
     else if (game === 'typingrace') logic = typingRaceLogic;
+    else if (game === 'contexto') logic = contextoLogic;
+    else if (game === 'mafia') logic = mafiaLogic;
 
     if (logic) {
       const results = logic.getResults(room);
@@ -1142,12 +1181,14 @@ io.on('connection', (socket) => {
     else if (gameType === 'neverhaveiever') neverHaveIEverLogic.init(room, settings);
     else if (gameType === 'truthordrink') truthOrDrinkLogic.init(room, settings);
     else if (gameType === 'typingrace') typingRaceLogic.init(room, settings);
+    else if (gameType === 'contexto') contextoLogic.init(room, settings);
+    else if (gameType === 'mafia') mafiaLogic.init(room, settings);
 
     // Check if init succeeded (some games need minimum players)
     if (!room.gameState) {
       room.currentGame = null;
       room.status = 'lobby';
-      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2 };
+      const minPlayers = { chess: 1, battleship: 2, rummy: 2, coup: 2, dixit: 3, codenames: 4, ludo: 2, poker: 2, knowme: 2, connectfour: 2, tictactoe: 2, kingscup: 2, mafia: 4 };
       const needed = minPlayers[gameType] || 2;
       socket.emit('game-error', { message: `${gameType.charAt(0).toUpperCase() + gameType.slice(1)} requires at least ${needed} players` });
       return;
@@ -1244,6 +1285,12 @@ io.on('connection', (socket) => {
         });
         return;
       }
+      if (gameType === 'mafia') {
+        room.players.forEach(p => {
+          if (!p.isSpectator) io.to(p.id).emit('mafia-state', mafiaLogic.getPlayerView(room, p.id));
+        });
+        return;
+      }
       if (gameType === 'ludo') {
         room.players.forEach(p => {
           const view = ludoLogic.getPlayerView(room, p.id);
@@ -1326,6 +1373,7 @@ io.on('connection', (socket) => {
       if (gameType === 'neverhaveiever') data = neverHaveIEverLogic.getCurrentQuestion(room);
       if (gameType === 'truthordrink') data = truthOrDrinkLogic.getCurrentQuestion(room);
       if (gameType === 'typingrace') data = typingRaceLogic.getCurrentPrompt(room);
+      if (gameType === 'contexto') data = contextoLogic.getCurrentPrompt(room);
       if (data) io.to(room.code).emit('game-state', data);
     }, 3000);
   });
@@ -1343,6 +1391,14 @@ io.on('connection', (socket) => {
     // Convert spectators to regular players
     room.players.forEach(p => { p.isSpectator = false; });
     io.to(room.code).emit('back-to-lobby', { players: room.players });
+  });
+
+  // ─── CONTEXTO: HINT REQUEST ───
+  socket.on('contexto-hint', () => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'contexto') return;
+    const hint = contextoLogic.getHint(room, socket.id);
+    if (hint) socket.emit('contexto-guess-result', hint);
   });
 
   // ─── DRAW & GUESS: relay drawing data ───
@@ -1816,6 +1872,73 @@ io.on('connection', (socket) => {
       room.status = 'lobby';
       room.currentGame = null;
     }
+  });
+
+  // ─── MAFIA EVENTS ───
+  function emitMafiaState(room) {
+    room.players.forEach(p => {
+      if (!p.isSpectator) io.to(p.id).emit('mafia-update', mafiaLogic.getPlayerView(room, p.id));
+    });
+    // Check if game is over
+    if (room.gameState && room.gameState.phase === 'game-over') {
+      const results = mafiaLogic.getResults(room);
+      recordGameResults(room);
+      io.to(room.code).emit('game-over', results);
+      room.status = 'lobby';
+      room.currentGame = null;
+    }
+  }
+
+  socket.on('mafia-vote', ({ targetId }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia') return;
+    const result = mafiaLogic.mafiaVote(room, socket.id, targetId);
+    if (result) emitMafiaState(room);
+  });
+
+  socket.on('mafia-doctor', ({ targetId }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia') return;
+    const result = mafiaLogic.doctorSave(room, socket.id, targetId);
+    if (result) emitMafiaState(room);
+  });
+
+  socket.on('mafia-investigate', ({ targetId }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia') return;
+    const result = mafiaLogic.detectiveInvestigate(room, socket.id, targetId);
+    if (result) {
+      // Only send updated state to the detective
+      socket.emit('mafia-update', mafiaLogic.getPlayerView(room, socket.id));
+    }
+  });
+
+  socket.on('mafia-detective-done', () => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia') return;
+    const result = mafiaLogic.detectiveDone(room, socket.id);
+    if (result) emitMafiaState(room);
+  });
+
+  socket.on('mafia-start-vote', () => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia' || room.hostId !== socket.id) return;
+    const result = mafiaLogic.startDayVote(room);
+    if (result) emitMafiaState(room);
+  });
+
+  socket.on('mafia-day-vote', ({ targetId }) => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia') return;
+    const result = mafiaLogic.dayVote(room, socket.id, targetId);
+    if (result) emitMafiaState(room);
+  });
+
+  socket.on('mafia-next-night', () => {
+    const room = rooms.get(socket.roomCode);
+    if (!room || room.currentGame !== 'mafia' || room.hostId !== socket.id) return;
+    const moved = mafiaLogic.nextNight(room);
+    if (moved) emitMafiaState(room);
   });
 
   // ─── LUDO EVENTS ───

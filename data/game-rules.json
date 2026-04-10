@@ -481,5 +481,54 @@
       "The hot seat rotates each round so everyone gets their turn in the spotlight"
     ],
     "tips": "The best truths are the ones that surprise everyone! But if it's too spicy... just drink. 🍺"
+  },
+  "typingrace": {
+    "name": "Monkey Press",
+    "icon": "🐵",
+    "players": "2+",
+    "summary": "Race to type a passage faster and more accurately than your friends!",
+    "rules": [
+      "A text passage is shown to all players at the same time",
+      "Type the passage as fast and accurately as you can",
+      "Your WPM (words per minute) and accuracy are tracked live",
+      "When you finish the passage or time runs out, results are compared",
+      "Highest WPM with good accuracy wins the round",
+      "Multiple rounds are played — total score determines the winner"
+    ],
+    "tips": "Focus on accuracy first, speed second. Mistakes slow you down more than careful typing!"
+  },
+  "contexto": {
+    "name": "Contexto",
+    "icon": "🔍",
+    "players": "2+",
+    "summary": "Guess the secret word by finding semantically related words — lower rank means closer!",
+    "rules": [
+      "A secret word is chosen each round — your goal is to guess it",
+      "Type any word and submit — you'll see its rank (how close it is to the secret)",
+      "Rank #1 is the most similar word, higher ranks mean less related",
+      "Use the ranks to narrow down what the secret word could be",
+      "You can use up to 3 hints per round, which reveal ranked words for free",
+      "Finding the secret word earns bonus points based on guess count and speed",
+      "All players play simultaneously — race to find it first!"
+    ],
+    "tips": "Start with broad category words (animal, food, place) to narrow the theme, then get specific!"
+  },
+  "mafia": {
+    "name": "Mafia",
+    "icon": "🗡️",
+    "players": "4+",
+    "summary": "A social deduction game — Town vs Mafia. Survive the night and find the killers!",
+    "rules": [
+      "Players are secretly assigned roles: Mafia, Doctor, Detective, or Villager",
+      "Night phase: Mafia secretly votes to eliminate someone",
+      "Night phase: The Doctor chooses one player to protect from elimination",
+      "Night phase: The Detective investigates one player to learn if they're Mafia",
+      "Day phase: Everyone discusses who they think the Mafia is",
+      "Day phase: Players vote to eliminate a suspect — majority needed",
+      "Town wins when all Mafia members are eliminated",
+      "Mafia wins when they equal or outnumber the remaining Town players",
+      "Eliminated players' roles are revealed"
+    ],
+    "tips": "Pay attention to who's quiet, who accuses too fast, and who changes their story. Trust your gut!"
   }
 }
